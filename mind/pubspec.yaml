@@ -32,6 +32,7 @@ dependencies:
   flutter:
     sdk: flutter
   google_fonts: ^3.0.1
+  water_drop_nav_bar: ^2.2.0+4
 
 
   # The following adds the Cupertino Icons font to your application.

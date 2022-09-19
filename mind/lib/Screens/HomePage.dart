@@ -1,18 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:water_drop_nav_bar/water_drop_nav_bar.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  int selectedIndex = 0;
+  var pageController = PageController();
+
+  @override
+  void initState() {
+    super.initState();
+    pageController = PageController(initialPage: selectedIndex);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         title: Text(
           'Mind',
-          style: GoogleFonts.lobster(),
+          style: Theme.of(context).appBarTheme.titleTextStyle,
         ),
         centerTitle: true,
         actions: [
-          IconButton(onPressed: () {}, icon: Icon(Icons.person)),
+          IconButton(
+              onPressed: () {
+                //navigate to profile page
+              },
+              icon: Icon(Icons.person)),
         ],
       ),
       drawer: Drawer(
@@ -46,6 +66,7 @@ class HomePage extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: SingleChildScrollView(
+          controller: pageController,
           child: Column(children: [
             Container(
               decoration: const BoxDecoration(color: Colors.black54),
@@ -111,18 +132,32 @@ class HomePage extends StatelessWidget {
               width: double.infinity,
               child: Center(
                 child: Text(
-                  'Friends List here',
+                  'Friends Recently Watched',
                 ),
               ),
             )
           ]),
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(items: [
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-        BottomNavigationBarItem(icon: Icon(Icons.people), label: 'Friends'),
-        BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Settings')
-      ]),
+      bottomNavigationBar: WaterDropNavBar(
+        backgroundColor: Colors.black,
+        selectedIndex: selectedIndex,
+        onItemSelected: ((index) {
+          setState(() {
+            selectedIndex = index;
+          });
+        }),
+        barItems: [
+          BarItem(
+            filledIcon: Icons.home_filled,
+            outlinedIcon: Icons.home,
+          ),
+          BarItem(
+            filledIcon: Icons.connect_without_contact_rounded,
+            outlinedIcon: Icons.connect_without_contact_outlined,
+          )
+        ],
+      ),
     );
   }
 }
