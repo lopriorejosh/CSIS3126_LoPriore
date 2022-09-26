@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:mind/Models/movie.dart';
+import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import './Screens/HomePage.dart';
+import './Providers/movies_provider.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(MultiProvider(
+    providers: [
+      Provider<MoviesProvider>(create: (_) => MoviesProvider()),
+    ],
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -14,9 +22,20 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Mind',
       theme: ThemeData(
-          //brightness: Brightness.dark,
+          brightness: Brightness.dark,
           primarySwatch: Colors.green,
-          //scaffoldBackgroundColor: Colors.black,
+          bottomAppBarColor: Colors.green,
+          textTheme: TextTheme(
+            titleLarge: TextStyle(
+              fontFamily: GoogleFonts.satisfy().fontFamily,
+              fontSize: 30.0,
+            ),
+            displayMedium: TextStyle(
+                fontSize: 25.0,
+                color: Colors.white,
+                fontFamily: GoogleFonts.yesevaOne().fontFamily,
+                decoration: TextDecoration.underline),
+          ),
           appBarTheme: AppBarTheme(color: Colors.transparent)),
       home: HomePage(),
     );

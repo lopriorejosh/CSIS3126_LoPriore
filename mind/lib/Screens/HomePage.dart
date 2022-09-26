@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mind/Models/movie.dart';
 import 'package:water_drop_nav_bar/water_drop_nav_bar.dart';
 
 import '../Widgets/my_appbar.dart';
+import '../Widgets/movieGridItem.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -57,73 +59,30 @@ class _HomePageState extends State<HomePage> {
       body: SingleChildScrollView(
         controller: pageController,
         child: Column(children: [
-          Container(
-            decoration: const BoxDecoration(color: Colors.black54),
-            width: double.infinity,
-            height: MediaQuery.of(context).size.height * .45,
-            child: const Center(
-              child: Text(
-                'Image will go here',
-              ),
-            ),
+          InkWell(
+            child: Image.network(
+                'https://lumiere-a.akamaihd.net/v1/images/p_thorloveandthunder_639_593cb642.jpeg'),
+            onTap: () => print('Navigate to movie details'),
           ),
           Container(
-            alignment: Alignment.centerLeft,
+            alignment: Alignment.center,
             child: Text(
-              "Today's must watch: ",
-              style: GoogleFonts.lobster(fontSize: 20),
+              "Today's must watch",
+              style: Theme.of(context).textTheme.displayMedium,
             ),
           ),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: [
-                Container(
-                  height: MediaQuery.of(context).size.height * .25,
-                  width: MediaQuery.of(context).size.width * .45,
-                  color: Colors.black,
-                  child: Center(
-                    child: Text(
-                      'test',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                ),
-                Container(
-                  height: MediaQuery.of(context).size.height * .25,
-                  width: MediaQuery.of(context).size.width * .45,
-                  color: Colors.orange,
-                  child: Center(
-                    child: Text(
-                      'test',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                ),
-                Container(
-                  height: MediaQuery.of(context).size.height * .25,
-                  width: MediaQuery.of(context).size.width * .45,
-                  color: Colors.blue,
-                  child: Center(
-                    child: Text(
-                      'test',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                )
-              ],
-            ),
+          SizedBox(
+            height: MediaQuery.of(context).size.height * .25,
+            width: double.infinity,
+            child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: 10,
+                itemBuilder: (ctx, index) => MovieGridItem(
+                    'https://m.media-amazon.com/images/M/MV5BMTg1MTY2MjYzNV5BMl5BanBnXkFtZTgwMTc4NTMwNDI@._V1_.jpg')),
           ),
           Divider(),
-          Container(
-            decoration: BoxDecoration(color: Colors.black54),
-            height: MediaQuery.of(context).size.height * .45,
-            width: double.infinity,
-            child: Center(
-              child: Text(
-                'Friends Recently Watched',
-              ),
-            ),
+          Placeholder(
+            fallbackHeight: MediaQuery.of(context).size.height * .75,
           )
         ]),
       ),

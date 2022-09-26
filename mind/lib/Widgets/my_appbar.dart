@@ -8,7 +8,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
         elevation: 0,
         title: Text(
           'Mind',
-          style: GoogleFonts.satisfy(),
+          style: Theme.of(context).textTheme.titleLarge,
         ),
         centerTitle: true,
         actions: [
