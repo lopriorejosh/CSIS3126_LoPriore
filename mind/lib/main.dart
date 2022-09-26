@@ -14,8 +14,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Mind',
       theme: ThemeData(
-        brightness: Brightness.dark,
-      ),
+          //brightness: Brightness.dark,
+          primarySwatch: Colors.green,
+          //scaffoldBackgroundColor: Colors.black,
+          appBarTheme: AppBarTheme(color: Colors.transparent)),
       home: HomePage(),
     );
   }

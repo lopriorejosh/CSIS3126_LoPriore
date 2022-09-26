@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:water_drop_nav_bar/water_drop_nav_bar.dart';
 
+import '../Widgets/my_appbar.dart';
+
 class HomePage extends StatefulWidget {
   @override
   State<HomePage> createState() => _HomePageState();
@@ -10,6 +12,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int selectedIndex = 0;
   var pageController = PageController();
+
+  var appBar = MyAppBar();
 
   @override
   void initState() {
@@ -20,21 +24,8 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        title: Text(
-          'Mind',
-          style: Theme.of(context).appBarTheme.titleTextStyle,
-        ),
-        centerTitle: true,
-        actions: [
-          IconButton(
-              onPressed: () {
-                //navigate to profile page
-              },
-              icon: Icon(Icons.person)),
-        ],
-      ),
+      extendBodyBehindAppBar: true,
+      appBar: appBar,
       drawer: Drawer(
           child: ListView(
         children: [
@@ -63,81 +54,78 @@ class _HomePageState extends State<HomePage> {
           Divider(),
         ],
       )),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: SingleChildScrollView(
-          controller: pageController,
-          child: Column(children: [
-            Container(
-              decoration: const BoxDecoration(color: Colors.black54),
-              width: double.infinity,
-              height: MediaQuery.of(context).size.height * .45,
-              child: const Center(
-                child: Text(
-                  'Image will go here',
-                ),
-              ),
-            ),
-            Container(
-              alignment: Alignment.centerLeft,
+      body: SingleChildScrollView(
+        controller: pageController,
+        child: Column(children: [
+          Container(
+            decoration: const BoxDecoration(color: Colors.black54),
+            width: double.infinity,
+            height: MediaQuery.of(context).size.height * .45,
+            child: const Center(
               child: Text(
-                "Today's must watch: ",
-                style: GoogleFonts.lobster(fontSize: 20),
+                'Image will go here',
               ),
             ),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: [
-                  Container(
-                    height: MediaQuery.of(context).size.height * .25,
-                    width: MediaQuery.of(context).size.width * .45,
-                    color: Colors.black,
-                    child: Center(
-                      child: Text(
-                        'test',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    height: MediaQuery.of(context).size.height * .25,
-                    width: MediaQuery.of(context).size.width * .45,
-                    color: Colors.orange,
-                    child: Center(
-                      child: Text(
-                        'test',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    height: MediaQuery.of(context).size.height * .25,
-                    width: MediaQuery.of(context).size.width * .45,
-                    color: Colors.blue,
-                    child: Center(
-                      child: Text(
-                        'test',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  )
-                ],
-              ),
+          ),
+          Container(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              "Today's must watch: ",
+              style: GoogleFonts.lobster(fontSize: 20),
             ),
-            Divider(),
-            Container(
-              decoration: BoxDecoration(color: Colors.black54),
-              height: MediaQuery.of(context).size.height * .45,
-              width: double.infinity,
-              child: Center(
-                child: Text(
-                  'Friends Recently Watched',
+          ),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                Container(
+                  height: MediaQuery.of(context).size.height * .25,
+                  width: MediaQuery.of(context).size.width * .45,
+                  color: Colors.black,
+                  child: Center(
+                    child: Text(
+                      'test',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
                 ),
+                Container(
+                  height: MediaQuery.of(context).size.height * .25,
+                  width: MediaQuery.of(context).size.width * .45,
+                  color: Colors.orange,
+                  child: Center(
+                    child: Text(
+                      'test',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ),
+                Container(
+                  height: MediaQuery.of(context).size.height * .25,
+                  width: MediaQuery.of(context).size.width * .45,
+                  color: Colors.blue,
+                  child: Center(
+                    child: Text(
+                      'test',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+          Divider(),
+          Container(
+            decoration: BoxDecoration(color: Colors.black54),
+            height: MediaQuery.of(context).size.height * .45,
+            width: double.infinity,
+            child: Center(
+              child: Text(
+                'Friends Recently Watched',
               ),
-            )
-          ]),
-        ),
+            ),
+          )
+        ]),
       ),
       bottomNavigationBar: WaterDropNavBar(
         backgroundColor: Colors.black,
