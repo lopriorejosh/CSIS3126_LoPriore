@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:mind/Models/movie.dart';
 import 'package:water_drop_nav_bar/water_drop_nav_bar.dart';
+import 'package:provider/provider.dart';
 
+import '../Providers/movies_provider.dart';
 import '../Widgets/my_appbar.dart';
-import '../Widgets/movieGridItem.dart';
+import '../Widgets/movie_grid_item.dart';
+import '../Screens/movie_description_page.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -25,6 +26,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    var movieData = Provider.of<MoviesProvider>(context).topMovies;
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: appBar,
@@ -60,10 +63,11 @@ class _HomePageState extends State<HomePage> {
         controller: pageController,
         child: Column(children: [
           InkWell(
-            child: Image.network(
-                'https://lumiere-a.akamaihd.net/v1/images/p_thorloveandthunder_639_593cb642.jpeg'),
-            onTap: () => print('Navigate to movie details'),
-          ),
+              child: Image.network(
+                  'https://lumiere-a.akamaihd.net/v1/images/p_thorloveandthunder_639_593cb642.jpeg'),
+              onTap: () => print('go to page')
+              //Navigator.of(context).pushNamed(MovieDescriptionPage.routeName, arguments: Movie),
+              ),
           Container(
             alignment: Alignment.center,
             child: Text(
@@ -76,9 +80,15 @@ class _HomePageState extends State<HomePage> {
             width: double.infinity,
             child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: 10,
+                itemCount: 6,
                 itemBuilder: (ctx, index) => MovieGridItem(
-                    'https://m.media-amazon.com/images/M/MV5BMTg1MTY2MjYzNV5BMl5BanBnXkFtZTgwMTc4NTMwNDI@._V1_.jpg')),
+                      imageUrl: movieData[index].imageUrl,
+                      duration: movieData[index].duration,
+                      description: movieData[index].description,
+                      genre: movieData[index].genre,
+                      id: movieData[index].id,
+                      title: movieData[index].title,
+                    )),
           ),
           Divider(),
           Placeholder(
