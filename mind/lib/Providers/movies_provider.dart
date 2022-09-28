@@ -18,7 +18,7 @@ class MoviesProvider extends ChangeNotifier {
     Movie(
       'Black Panther',
       'Action',
-      'Follows the hero of wakanda and the black panther power',
+      'Follows the hero of wakanda and the black panther powerFollows the hero of wakanda and the black panther powerFollows the hero of wakanda and the black panther powerFollows the hero of wakanda and the black panther powerFollows the hero of wakanda and the black panther powerFollows the hero of wakanda and the black panther powerFollows the hero of wakanda and the black panther powerFollows the hero of wakanda and the black panther powerFollows the hero of wakanda and the black panther powerFollows the hero of wakanda and the black panther power',
       90,
       'id',
       'https://m.media-amazon.com/images/M/MV5BMTg1MTY2MjYzNV5BMl5BanBnXkFtZTgwMTc4NTMwNDI@._V1_.jpg',

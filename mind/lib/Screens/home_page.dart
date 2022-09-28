@@ -80,7 +80,7 @@ class _HomePageState extends State<HomePage> {
             width: double.infinity,
             child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: 6,
+                itemCount: movieData.length,
                 itemBuilder: (ctx, index) => MovieGridItem(
                       imageUrl: movieData[index].imageUrl,
                       duration: movieData[index].duration,

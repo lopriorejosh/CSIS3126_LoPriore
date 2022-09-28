@@ -30,13 +30,21 @@ class MyApp extends StatelessWidget {
             fontFamily: GoogleFonts.satisfy().fontFamily,
             fontSize: 30.0,
           ),
+          titleMedium: TextStyle(
+            fontFamily: GoogleFonts.play().fontFamily,
+            fontSize: 30.0,
+          ),
           displayMedium: TextStyle(
               fontSize: 25.0,
               color: Colors.white,
               fontFamily: GoogleFonts.yesevaOne().fontFamily,
               decoration: TextDecoration.underline),
+          bodyLarge: TextStyle(
+            //fontSize: 20.0,
+            fontFamily: GoogleFonts.acme().fontFamily,
+          ),
         ),
-        appBarTheme: AppBarTheme(color: Colors.transparent),
+        appBarTheme: const AppBarTheme(color: Colors.transparent),
       ),
       home: HomePage(),
       routes: {
