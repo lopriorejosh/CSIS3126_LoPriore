@@ -59,5 +59,7 @@ class MoviesProvider extends ChangeNotifier {
 
   List<Movie> get topMovies => _topMovies;
 
-  Future<void> getTopMovies() async {}
+  Future<void> getTopMovies() async {
+    final topMoviesUrl = Uri.http('url + api key', '/movie/top_rated');
+  }
 }
