@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mind/Providers/movies_provider.dart';
+
+import '../Models/movie.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
@@ -14,6 +17,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           IconButton(
               onPressed: () {
                 //navigate to profile page
+                MoviesProvider().getPopularMovies();
               },
               icon: Icon(Icons.person)),
         ]);

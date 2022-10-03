@@ -6,15 +6,15 @@ import '../Models/movie.dart';
 class MovieGridItem extends StatelessWidget {
   final String imageUrl;
   final String title;
-  final String genre;
-  final double duration;
+  //final String genre;
+  //final double duration;
   final String id;
   final String description;
 
   MovieGridItem({
     required this.imageUrl,
-    required this.duration,
-    required this.genre,
+    // required this.duration,
+    // required this.genre,
     required this.id,
     required this.title,
     required this.description,
@@ -27,7 +27,14 @@ class MovieGridItem extends StatelessWidget {
       child: InkWell(
         onTap: () => Navigator.of(context).pushNamed(
           MovieDescriptionPage.routeName,
-          arguments: Movie(title, genre, description, duration, id, imageUrl),
+          arguments: Movie(
+            title: title,
+            //genre,
+            description: description,
+            //duration,
+            id: id,
+            imageUrl: imageUrl,
+          ),
         ),
         child: Container(
           padding: EdgeInsets.all(8),

@@ -20,6 +20,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
+    MoviesProvider().getPopularMovies();
     super.initState();
     pageController = PageController(initialPage: selectedIndex);
   }
@@ -82,11 +83,11 @@ class _HomePageState extends State<HomePage> {
                 scrollDirection: Axis.horizontal,
                 itemCount: movieData.length,
                 itemBuilder: (ctx, index) => MovieGridItem(
-                      imageUrl: movieData[index].imageUrl,
-                      duration: movieData[index].duration,
-                      description: movieData[index].description,
-                      genre: movieData[index].genre,
-                      id: movieData[index].id,
+                      imageUrl: movieData[index].backdropPath,
+                      // duration: movieData[index].duration,
+                      description: movieData[index].overview,
+                      // genre: movieData[index].genre,
+                      id: movieData[index].id.toString(),
                       title: movieData[index].title,
                     )),
           ),
