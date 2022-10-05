@@ -6,6 +6,8 @@ import '../Providers/movies_provider.dart';
 import '../Widgets/my_appbar.dart';
 import '../Widgets/movie_grid_item.dart';
 import '../Screens/movie_description_page.dart';
+import '../Models/movie_model.dart';
+import '../API/api_constants.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -20,14 +22,15 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    MoviesProvider().getPopularMovies();
+    //initial pull of data before build
+    Provider.of<MoviesProvider>(context, listen: false).FetchPopularMovies();
     super.initState();
     pageController = PageController(initialPage: selectedIndex);
   }
 
   @override
   Widget build(BuildContext context) {
-    var movieData = Provider.of<MoviesProvider>(context).topMovies;
+    var movieData = Provider.of<MoviesProvider>(context).popularMovies;
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -37,8 +40,9 @@ class _HomePageState extends State<HomePage> {
         children: [
           DrawerHeader(
             child: Image.network(
-                fit: BoxFit.fill,
-                'https://media.istockphoto.com/photos/movie-projector-on-dark-background-picture-id1007557230?b=1&k=20&m=1007557230&s=612x612&w=0&h=2ZZaKPuR-AfPav0cxVB5XG-fMoMSHz1_wpggcR3p9co='),
+              fit: BoxFit.fill,
+              '/wSqAXL1EHVJ3MOnJzMhUngc8gFs.jpg',
+            ),
           ),
           ListTile(
             onTap: () {},
@@ -60,43 +64,58 @@ class _HomePageState extends State<HomePage> {
           Divider(),
         ],
       )),
-      body: SingleChildScrollView(
-        controller: pageController,
-        child: Column(children: [
-          InkWell(
-              child: Image.network(
-                  'https://lumiere-a.akamaihd.net/v1/images/p_thorloveandthunder_639_593cb642.jpeg'),
-              onTap: () => print('go to page')
-              //Navigator.of(context).pushNamed(MovieDescriptionPage.routeName, arguments: Movie),
-              ),
-          Container(
-            alignment: Alignment.center,
-            child: Text(
-              "Today's must watch",
-              style: Theme.of(context).textTheme.displayMedium,
+      body: movieData == null || movieData.isEmpty
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
+          : SingleChildScrollView(
+              controller: pageController,
+              child: Column(children: [
+                InkWell(
+                    child: Container(
+                      width: double.infinity,
+                      height: MediaQuery.of(context).size.height * .4,
+                      child: Image.network(
+                        ApiConstants.imageEndpoint +
+                            ApiConstants.originalImageEndpoint +
+                            movieData[0].backdropPath,
+                        fit: BoxFit.fitHeight,
+                      ),
+                    ),
+                    onTap: () => print('go to page')
+                    //Navigator.of(context).pushNamed(MovieDescriptionPage.routeName, arguments: Movie),
+                    ),
+                Container(
+                  alignment: Alignment.center,
+                  child: Text(
+                    "Today's must watch",
+                    style: Theme.of(context).textTheme.displayMedium,
+                  ),
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * .25,
+                  width: double.infinity,
+                  child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: 15,
+                      itemBuilder: (ctx, index) => MovieGridItem(
+                            backdropPath: movieData[index].backdropPath,
+                            genreIds: movieData[index].genreIds,
+                            id: movieData[index].id,
+                            overview: movieData[index].overview,
+                            popularity: movieData[index].popularity,
+                            posterPath: movieData[index].posterPath,
+                            releaseDate: movieData[index].releaseDate,
+                            title: movieData[index].title,
+                            video: movieData[index].video,
+                          )),
+                ),
+                Divider(),
+                Placeholder(
+                  fallbackHeight: MediaQuery.of(context).size.height * .75,
+                )
+              ]),
             ),
-          ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * .25,
-            width: double.infinity,
-            child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: movieData.length,
-                itemBuilder: (ctx, index) => MovieGridItem(
-                      imageUrl: movieData[index].backdropPath,
-                      // duration: movieData[index].duration,
-                      description: movieData[index].overview,
-                      // genre: movieData[index].genre,
-                      id: movieData[index].id.toString(),
-                      title: movieData[index].title,
-                    )),
-          ),
-          Divider(),
-          Placeholder(
-            fallbackHeight: MediaQuery.of(context).size.height * .75,
-          )
-        ]),
-      ),
       bottomNavigationBar: WaterDropNavBar(
         backgroundColor: Colors.black,
         selectedIndex: selectedIndex,

@@ -14,14 +14,14 @@ class ConvertJson {
   });
 
   int page;
-  List<MovieInfo> results;
+  List<Movie> results;
   int totalPages;
   int totalResults;
 
   factory ConvertJson.fromJson(Map<String, dynamic> json) => ConvertJson(
         page: json["page"],
-        results: List<MovieInfo>.from(
-            json["results"].map((x) => MovieInfo.fromJson(x))),
+        results:
+            List<Movie>.from(json["results"].map((x) => Movie.fromJson(x))),
         totalPages: json["total_pages"],
         totalResults: json["total_results"],
       );
@@ -34,8 +34,8 @@ class ConvertJson {
       };
 }
 
-class MovieInfo {
-  MovieInfo({
+class Movie {
+  Movie({
     //required this.adult,
     required this.backdropPath,
     required this.genreIds,
@@ -67,7 +67,7 @@ class MovieInfo {
   //double voteAverage;
   //int voteCount;
 
-  factory MovieInfo.fromJson(Map<String, dynamic> json) => MovieInfo(
+  factory Movie.fromJson(Map<String, dynamic> json) => Movie(
         //adult: json["adult"],
         backdropPath: json["backdrop_path"],
         genreIds: List<int>.from(json["genre_ids"].map((x) => x)),

@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:expandable_text/expandable_text.dart';
 
 import '../Widgets/my_appbar.dart';
-import '../Models/movie.dart';
+import '../Models/movie_model.dart';
+import '../API/api_constants.dart';
 
 class MovieDescriptionPage extends StatelessWidget {
   static const routeName = '/MovieDescriptionPage';
@@ -17,7 +18,9 @@ class MovieDescriptionPage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Image.network(movieInfo.imageUrl),
+            Image.network(ApiConstants.imageEndpoint +
+                ApiConstants.originalImageEndpoint +
+                movieInfo.backdropPath),
             Center(
               child: Text(
                 movieInfo.title,
@@ -28,7 +31,7 @@ class MovieDescriptionPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: ExpandableText(
-                movieInfo.description,
+                movieInfo.overview,
                 expandText: 'Show More',
                 collapseText: 'Show Less',
                 maxLines: 3,
