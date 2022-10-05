@@ -68,11 +68,13 @@ class MovieGridItem extends StatelessWidget {
           SizedBox(
             height: 50,
             width: 250,
-            child: Text(
-              title,
-              style: Theme.of(context).textTheme.labelLarge,
+            child: Center(
+              child: Text(
+                title,
+                style: Theme.of(context).textTheme.labelLarge,
+              ),
             ),
-          )
+          ),
         ]),
       ),
     );

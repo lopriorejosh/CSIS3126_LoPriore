@@ -22,8 +22,6 @@ class MoviesProvider extends ChangeNotifier {
         //convert json data and set _popularMovies
         List<Movie> _fetchedMovies = convertFromJson(response.body).results;
         _popularMovies = _fetchedMovies;
-        print(_popularMovies[0].id);
-        print(_popularMovies[0].backdropPath);
         notifyListeners();
       }
     } catch (error) {

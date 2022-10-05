@@ -8,6 +8,7 @@ import '../Widgets/movie_grid_item.dart';
 import '../Screens/movie_description_page.dart';
 import '../Models/movie_model.dart';
 import '../API/api_constants.dart';
+import '../Widgets/top_movie.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -71,20 +72,12 @@ class _HomePageState extends State<HomePage> {
           : SingleChildScrollView(
               controller: pageController,
               child: Column(children: [
-                InkWell(
-                    child: Container(
-                      width: double.infinity,
-                      height: MediaQuery.of(context).size.height * .4,
-                      child: Image.network(
-                        ApiConstants.imageEndpoint +
-                            ApiConstants.originalImageEndpoint +
-                            movieData[0].backdropPath,
-                        fit: BoxFit.fitHeight,
-                      ),
-                    ),
-                    onTap: () => print('go to page')
-                    //Navigator.of(context).pushNamed(MovieDescriptionPage.routeName, arguments: Movie),
-                    ),
+                TopMovie(
+                  imageUrl: ApiConstants.imageEndpoint +
+                      ApiConstants.originalImageEndpoint +
+                      movieData[0].backdropPath,
+                  title: movieData[0].title,
+                ),
                 Container(
                   alignment: Alignment.center,
                   child: Text(
