@@ -40,10 +40,7 @@ class _HomePageState extends State<HomePage> {
           child: ListView(
         children: [
           DrawerHeader(
-            child: Image.network(
-              fit: BoxFit.fill,
-              '/wSqAXL1EHVJ3MOnJzMhUngc8gFs.jpg',
-            ),
+            child: Image.asset('lib/Assets/film_strip.jpg'),
           ),
           ListTile(
             onTap: () {},
@@ -73,10 +70,15 @@ class _HomePageState extends State<HomePage> {
               controller: pageController,
               child: Column(children: [
                 TopMovie(
-                  imageUrl: ApiConstants.imageEndpoint +
-                      ApiConstants.originalImageEndpoint +
-                      movieData[0].backdropPath,
+                  backdropPath: movieData[0].backdropPath,
+                  genreIds: movieData[0].genreIds,
+                  id: movieData[0].id,
+                  overview: movieData[0].overview,
+                  popularity: movieData[0].popularity,
+                  posterPath: movieData[0].posterPath,
+                  releaseDate: movieData[0].releaseDate,
                   title: movieData[0].title,
+                  video: movieData[0].video,
                 ),
                 Container(
                   alignment: Alignment.center,
