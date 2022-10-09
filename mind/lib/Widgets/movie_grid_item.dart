@@ -41,42 +41,39 @@ class MovieGridItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.all(Radius.circular(50)),
+    return Container(
+      //height: MediaQuery.of(context).size.height * .4,
+      width: MediaQuery.of(context).size.width * .4,
+      padding: const EdgeInsets.all(8.0),
       child: InkWell(
-        onTap: () => Navigator.of(context).pushNamed(
-          MovieDescriptionPage.routeName,
-          arguments: Movie(
-            title: title,
-            overview: overview,
-            id: id,
-            backdropPath: backdropPath,
-            genreIds: genreIds,
-            popularity: popularity,
-            posterPath: posterPath,
-            releaseDate: releaseDate,
-            video: video,
-          ),
-        ),
-        child: Stack(alignment: AlignmentDirectional.bottomCenter, children: [
-          Container(
-            padding: EdgeInsets.all(8),
-            child: Image.network(ApiConstants.imageEndpoint +
-                ApiConstants.originalImageEndpoint +
-                backdropPath),
-          ),
-          SizedBox(
-            height: 50,
-            width: 250,
-            child: Center(
-              child: Text(
-                title,
-                style: Theme.of(context).textTheme.labelLarge,
+          onTap: () => Navigator.of(context).pushNamed(
+                MovieDescriptionPage.routeName,
+                arguments: Movie(
+                  title: title,
+                  overview: overview,
+                  id: id,
+                  backdropPath: backdropPath,
+                  genreIds: genreIds,
+                  popularity: popularity,
+                  posterPath: posterPath,
+                  releaseDate: releaseDate,
+                  video: video,
+                ),
               ),
-            ),
-          ),
-        ]),
-      ),
+          child: Column(
+            children: [
+              Image.network(
+                ApiConstants.imageEndpoint +
+                    ApiConstants.originalImageEndpoint +
+                    backdropPath,
+                fit: BoxFit.fill,
+              ),
+              Text(
+                title,
+                style: Theme.of(context).textTheme.labelSmall,
+              )
+            ],
+          )),
     );
   }
 }

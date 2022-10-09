@@ -80,15 +80,19 @@ class _HomePageState extends State<HomePage> {
                   title: movieData[0].title,
                   video: movieData[0].video,
                 ),
+                SizedBox(
+                  height: 10,
+                ),
                 Container(
-                  alignment: Alignment.center,
+                  padding: EdgeInsets.all(6),
+                  alignment: Alignment.centerLeft,
                   child: Text(
                     "Today's must watch",
                     style: Theme.of(context).textTheme.displayMedium,
                   ),
                 ),
                 SizedBox(
-                  height: MediaQuery.of(context).size.height * .25,
+                  height: MediaQuery.of(context).size.height * .4,
                   width: double.infinity,
                   child: ListView.builder(
                       scrollDirection: Axis.horizontal,

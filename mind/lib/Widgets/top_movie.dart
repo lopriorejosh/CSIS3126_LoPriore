@@ -38,29 +38,39 @@ class TopMovie extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-        child: Stack(
-          alignment: AlignmentDirectional.bottomStart,
-          children: [
-            SizedBox(
-              width: double.infinity,
-              height: MediaQuery.of(context).size.height * .6,
-              child: Image.network(
-                ApiConstants.imageEndpoint +
-                    ApiConstants.originalImageEndpoint +
-                    backdropPath,
-                fit: BoxFit.fitHeight,
-              ),
-            ),
-            Expanded(
-              child: Text(
-                "Todays #1: $title",
-                style: Theme.of(context).textTheme.labelLarge,
-              ),
-            ),
-          ],
+    return Stack(children: [
+      ShaderMask(
+        shaderCallback: (rect) {
+          return const LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Colors.black, Colors.transparent],
+          ).createShader(Rect.fromLTRB(0, 0, rect.width, rect.height));
+        },
+        blendMode: BlendMode.dstIn,
+        child: Image.network(
+          ApiConstants.imageEndpoint +
+              ApiConstants.originalImageEndpoint +
+              backdropPath,
+          fit: BoxFit.fitHeight,
+          height: MediaQuery.of(context).size.height * .6,
         ),
-        onTap: () => Navigator.of(context).pushNamed(
+      ),
+      Positioned(
+        bottom: 50,
+        left: 50,
+        width: MediaQuery.of(context).size.width,
+        child: Text(
+          title,
+          style: Theme.of(context).textTheme.labelLarge,
+        ),
+      ),
+      Positioned(
+        right: 10,
+        bottom: 10,
+        child: IconButton(
+          onPressed: () {
+            Navigator.of(context).pushNamed(
               MovieDescriptionPage.routeName,
               arguments: Movie(
                 title: title,
@@ -73,7 +83,14 @@ class TopMovie extends StatelessWidget {
                 releaseDate: releaseDate,
                 video: video,
               ),
-              //Navigator.of(context).pushNamed(MovieDescriptionPage.routeName, arguments: Movie),
-            ));
+            );
+          },
+          icon: const Icon(
+            Icons.arrow_forward,
+            size: 20,
+          ),
+        ),
+      )
+    ]);
   }
 }

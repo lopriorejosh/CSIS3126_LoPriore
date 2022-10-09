@@ -26,27 +26,31 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.green,
         bottomAppBarColor: Colors.green,
         textTheme: TextTheme(
-            titleLarge: TextStyle(
-              fontFamily: GoogleFonts.satisfy().fontFamily,
-              fontSize: 30.0,
-            ),
-            titleMedium: TextStyle(
-              fontFamily: GoogleFonts.play().fontFamily,
-              fontSize: 30.0,
-            ),
-            displayMedium: TextStyle(
-                fontSize: 25.0,
-                color: Colors.white,
-                fontFamily: GoogleFonts.yesevaOne().fontFamily,
-                decoration: TextDecoration.underline),
-            bodyLarge: TextStyle(
-              //fontSize: 20.0,
-              fontFamily: GoogleFonts.acme().fontFamily,
-            ),
-            labelLarge: TextStyle(
-              backgroundColor: Colors.black54,
-              fontFamily: GoogleFonts.yesevaOne().fontFamily,
-            )),
+          titleLarge: TextStyle(
+            fontFamily: GoogleFonts.satisfy().fontFamily,
+            fontSize: 30.0,
+          ),
+          titleMedium: TextStyle(
+            fontFamily: GoogleFonts.play().fontFamily,
+            fontSize: 30.0,
+          ),
+          displayMedium: TextStyle(
+            fontSize: 20.0,
+            color: Colors.white,
+            fontFamily: GoogleFonts.yesevaOne().fontFamily,
+          ),
+          bodyLarge: TextStyle(
+            fontFamily: GoogleFonts.acme().fontFamily,
+          ),
+          labelLarge: TextStyle(
+            fontSize: 30,
+            fontFamily: GoogleFonts.yesevaOne().fontFamily,
+          ),
+          labelSmall: TextStyle(
+            fontSize: 15,
+            fontFamily: GoogleFonts.yesevaOne().fontFamily,
+          ),
+        ),
         appBarTheme: const AppBarTheme(color: Colors.transparent),
       ),
       home: HomePage(),
