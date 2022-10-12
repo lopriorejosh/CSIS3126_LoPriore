@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:mind/Providers/friends_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'Screens/home_page.dart';
+import './Screens/home_page.dart';
 import './Providers/movies_provider.dart';
 import './Screens/movie_description_page.dart';
 
@@ -10,6 +11,7 @@ void main() {
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider<MoviesProvider>(create: (_) => MoviesProvider()),
+      ChangeNotifierProvider<FriendsProvider>(create: (_) => FriendsProvider())
     ],
     child: MyApp(),
   ));

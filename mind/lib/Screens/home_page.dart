@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mind/Widgets/friends_watched.dart';
 import 'package:water_drop_nav_bar/water_drop_nav_bar.dart';
 import 'package:provider/provider.dart';
 
@@ -56,10 +57,6 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 RowOfMovies(popularMovies),
-                const Divider(),
-                Placeholder(
-                  fallbackHeight: MediaQuery.of(context).size.height * .75,
-                )
               ]),
             ),
       bottomNavigationBar: WaterDropNavBar(

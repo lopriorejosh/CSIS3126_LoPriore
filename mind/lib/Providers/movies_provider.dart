@@ -1,11 +1,8 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:mind/Models/movie_model.dart';
 
 import '../API/api_constants.dart';
-//import '../Models/movie.dart';
+import '../Models/movie_model.dart';
 
 class MoviesProvider extends ChangeNotifier {
   late List<Movie> _popularMovies = [];
