@@ -5,36 +5,9 @@ import '../Models/movie_model.dart';
 import '../API/api_constants.dart';
 
 class TopMovie extends StatelessWidget {
-  //bool adult;
-  String backdropPath;
-  List<int> genreIds;
-  int id;
-  //String originalLanguage;
-  //String originalTitle;
-  String overview;
-  double popularity;
-  String posterPath;
-  DateTime releaseDate;
-  String title;
-  bool video;
-  //double voteAverage;
-  //int voteCount;
-  TopMovie({
-    //required this.adult,
-    required this.backdropPath,
-    required this.genreIds,
-    required this.id,
-    //required this.originalLanguage,
-    //required this.originalTitle,
-    required this.overview,
-    required this.popularity,
-    required this.posterPath,
-    required this.releaseDate,
-    required this.title,
-    required this.video,
-    //required this.voteAverage,
-    //required this.voteCount,
-  });
+  Movie topMovie;
+
+  TopMovie(this.topMovie);
 
   @override
   Widget build(BuildContext context) {
@@ -51,9 +24,10 @@ class TopMovie extends StatelessWidget {
         child: Image.network(
           ApiConstants.imageEndpoint +
               ApiConstants.originalImageEndpoint +
-              backdropPath,
+              topMovie.backdropPath,
           fit: BoxFit.fitHeight,
           height: MediaQuery.of(context).size.height * .6,
+          width: MediaQuery.of(context).size.width,
         ),
       ),
       Positioned(
@@ -61,7 +35,7 @@ class TopMovie extends StatelessWidget {
         left: 50,
         width: MediaQuery.of(context).size.width,
         child: Text(
-          title,
+          topMovie.title,
           style: Theme.of(context).textTheme.labelLarge,
         ),
       ),
@@ -73,15 +47,15 @@ class TopMovie extends StatelessWidget {
             Navigator.of(context).pushNamed(
               MovieDescriptionPage.routeName,
               arguments: Movie(
-                title: title,
-                overview: overview,
-                id: id,
-                backdropPath: backdropPath,
-                genreIds: genreIds,
-                popularity: popularity,
-                posterPath: posterPath,
-                releaseDate: releaseDate,
-                video: video,
+                title: topMovie.title,
+                overview: topMovie.overview,
+                id: topMovie.id,
+                backdropPath: topMovie.backdropPath,
+                genreIds: topMovie.genreIds,
+                popularity: topMovie.popularity,
+                posterPath: topMovie.posterPath,
+                releaseDate: topMovie.releaseDate,
+                video: topMovie.video,
               ),
             );
           },

@@ -4,11 +4,9 @@ import 'package:provider/provider.dart';
 
 import '../Providers/movies_provider.dart';
 import '../Widgets/my_appbar.dart';
-import '../Widgets/movie_grid_item.dart';
-import '../Screens/movie_description_page.dart';
-import '../Models/movie_model.dart';
-import '../API/api_constants.dart';
 import '../Widgets/top_movie.dart';
+import '../Widgets/row_of_movies.dart';
+import '../Widgets/my_drawer.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -18,8 +16,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int selectedIndex = 0;
   var pageController = PageController();
-
-  var appBar = MyAppBar();
 
   @override
   void initState() {
@@ -31,38 +27,14 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    var movieData = Provider.of<MoviesProvider>(context).popularMovies;
+    var popularMovies = Provider.of<MoviesProvider>(context).popularMovies;
 
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: appBar,
-      drawer: Drawer(
-          child: ListView(
-        children: [
-          DrawerHeader(
-            child: Image.asset('lib/Assets/film_strip.jpg'),
-          ),
-          ListTile(
-            onTap: () {},
-            title: Text('Home'),
-            leading: Icon(Icons.home),
-          ),
-          Divider(),
-          ListTile(
-            onTap: () {},
-            title: Text('Friends'),
-            leading: Icon(Icons.people),
-          ),
-          Divider(),
-          ListTile(
-            onTap: () {},
-            title: Text('Settings'),
-            leading: Icon(Icons.settings),
-          ),
-          Divider(),
-        ],
-      )),
-      body: movieData == null || movieData.isEmpty
+      appBar: MyAppBar(),
+      drawer: MyDrawer(),
+      //if loading movies or empty show loading spinner else show page
+      body: popularMovies == null || popularMovies.isEmpty
           ? const Center(
               child: CircularProgressIndicator(),
             )
@@ -70,17 +42,9 @@ class _HomePageState extends State<HomePage> {
               controller: pageController,
               child: Column(children: [
                 TopMovie(
-                  backdropPath: movieData[0].backdropPath,
-                  genreIds: movieData[0].genreIds,
-                  id: movieData[0].id,
-                  overview: movieData[0].overview,
-                  popularity: movieData[0].popularity,
-                  posterPath: movieData[0].posterPath,
-                  releaseDate: movieData[0].releaseDate,
-                  title: movieData[0].title,
-                  video: movieData[0].video,
+                  popularMovies[0],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Container(
@@ -91,25 +55,8 @@ class _HomePageState extends State<HomePage> {
                     style: Theme.of(context).textTheme.displayMedium,
                   ),
                 ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * .4,
-                  width: double.infinity,
-                  child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 15,
-                      itemBuilder: (ctx, index) => MovieGridItem(
-                            backdropPath: movieData[index].backdropPath,
-                            genreIds: movieData[index].genreIds,
-                            id: movieData[index].id,
-                            overview: movieData[index].overview,
-                            popularity: movieData[index].popularity,
-                            posterPath: movieData[index].posterPath,
-                            releaseDate: movieData[index].releaseDate,
-                            title: movieData[index].title,
-                            video: movieData[index].video,
-                          )),
-                ),
-                Divider(),
+                RowOfMovies(popularMovies),
+                const Divider(),
                 Placeholder(
                   fallbackHeight: MediaQuery.of(context).size.height * .75,
                 )
