@@ -32,12 +32,16 @@ class TopMovie extends StatelessWidget {
       ),
       Positioned(
         bottom: 50,
-        left: 50,
-        //height: MediaQuery.of(context).size.height * .15,
+        left: 10,
+        height: MediaQuery.of(context).size.height * .1,
         width: MediaQuery.of(context).size.width,
-        child: Text(
-          topMovie.title,
-          style: Theme.of(context).textTheme.labelLarge,
+        child: FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            topMovie.title,
+            style: Theme.of(context).textTheme.labelLarge,
+            maxLines: 1,
+          ),
         ),
       ),
       Positioned(

@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
             fontFamily: GoogleFonts.acme().fontFamily,
           ),
           labelLarge: TextStyle(
-            fontSize: 30,
+            //fontSize: 30,
             fontFamily: GoogleFonts.yesevaOne().fontFamily,
           ),
           labelSmall: TextStyle(

@@ -13,14 +13,21 @@ class MovieDescriptionPage extends StatelessWidget {
     var movieInfo = ModalRoute.of(context)!.settings.arguments as Movie;
 
     return Scaffold(
-      //extendBodyBehindAppBar: true,
+      extendBodyBehindAppBar: true,
       appBar: MyAppBar(),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Image.network(ApiConstants.imageEndpoint +
-                ApiConstants.originalImageEndpoint +
-                movieInfo.backdropPath),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * .5,
+              width: double.infinity,
+              child: Image.network(
+                ApiConstants.imageEndpoint +
+                    ApiConstants.originalImageEndpoint +
+                    movieInfo.backdropPath,
+                fit: BoxFit.fitHeight,
+              ),
+            ),
             Center(
               child: Text(
                 movieInfo.title,
@@ -34,7 +41,7 @@ class MovieDescriptionPage extends StatelessWidget {
                 movieInfo.overview,
                 expandText: 'Show More',
                 collapseText: 'Show Less',
-                maxLines: 3,
+                maxLines: 2,
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
             ),
