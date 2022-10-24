@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mind/Widgets/friends_watched.dart';
+import 'package:mind/Providers/friends_provider.dart';
 import 'package:water_drop_nav_bar/water_drop_nav_bar.dart';
 import 'package:provider/provider.dart';
 
@@ -8,8 +8,11 @@ import '../Widgets/my_appbar.dart';
 import '../Widgets/top_movie.dart';
 import '../Widgets/row_of_movies.dart';
 import '../Widgets/my_drawer.dart';
+import './/Widgets/friends_watched.dart';
 
 class HomePage extends StatefulWidget {
+  static const routeName = '/home';
+
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -29,6 +32,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     var popularMovies = Provider.of<MoviesProvider>(context).popularMovies;
+    //var friendsList = Provider.of<FriendsProvider>(context).friendsList;
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -57,6 +61,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 RowOfMovies(popularMovies),
+                FriendsWatched(),
               ]),
             ),
       bottomNavigationBar: WaterDropNavBar(

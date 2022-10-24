@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mind/Providers/movies_provider.dart';
 
+import '../Providers/movies_provider.dart';
 import '../Models/movie_model.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -16,9 +16,9 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
         actions: [
           IconButton(
               onPressed: () {
-                //navigate to profile page
+                //navigate to search page
               },
-              icon: Icon(Icons.person)),
+              icon: const Icon(Icons.search)),
         ]);
   }
 

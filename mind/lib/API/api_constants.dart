@@ -4,4 +4,10 @@ class ApiConstants {
   static String popularMoviesEndpoint = '/movie/popular/';
   static String imageEndpoint = 'https://image.tmdb.org/t/p';
   static String originalImageEndpoint = '/original';
+
+  static String fireBaseAPIKey = "AIzaSyAHb9_0HtYGJmJs2KCTgkR4gEb4QXJYRuo";
+  static String newUserEndpoint =
+      "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=$fireBaseAPIKey";
+  static String signInUserEndpoint =
+      "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=$fireBaseAPIKey";
 }

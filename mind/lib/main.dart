@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:mind/Providers/friends_provider.dart';
+import './Screens/auth_page.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import './Screens/home_page.dart';
 import './Providers/movies_provider.dart';
 import './Screens/movie_description_page.dart';
+import './Providers/auth_provider.dart';
 
 void main() {
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider<MoviesProvider>(create: (_) => MoviesProvider()),
-      ChangeNotifierProvider<FriendsProvider>(create: (_) => FriendsProvider())
+      ChangeNotifierProvider<FriendsProvider>(create: (_) => FriendsProvider()),
+      ChangeNotifierProvider(create: (_) => AuthProvider())
     ],
     child: MyApp(),
   ));
@@ -45,7 +48,7 @@ class MyApp extends StatelessWidget {
             fontFamily: GoogleFonts.acme().fontFamily,
           ),
           labelLarge: TextStyle(
-            //fontSize: 30,
+            fontSize: 30,
             fontFamily: GoogleFonts.yesevaOne().fontFamily,
           ),
           labelSmall: TextStyle(
@@ -55,8 +58,9 @@ class MyApp extends StatelessWidget {
         ),
         appBarTheme: const AppBarTheme(color: Colors.transparent),
       ),
-      home: HomePage(),
+      home: AuthScreen(),
       routes: {
+        HomePage.routeName: (context) => HomePage(),
         MovieDescriptionPage.routeName: (context) => MovieDescriptionPage(),
       },
     );

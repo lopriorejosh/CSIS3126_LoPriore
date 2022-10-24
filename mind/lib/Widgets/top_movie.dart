@@ -39,7 +39,7 @@ class TopMovie extends StatelessWidget {
           fit: BoxFit.scaleDown,
           child: Text(
             topMovie.title,
-            style: Theme.of(context).textTheme.labelLarge,
+            style: const TextStyle(fontSize: 25),
             maxLines: 1,
           ),
         ),
