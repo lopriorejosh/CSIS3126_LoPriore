@@ -10,4 +10,7 @@ class ApiConstants {
       "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=$fireBaseAPIKey";
   static String signInUserEndpoint =
       "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=$fireBaseAPIKey";
+
+  static String anonomousEndpoint =
+      "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=$fireBaseAPIKey";
 }

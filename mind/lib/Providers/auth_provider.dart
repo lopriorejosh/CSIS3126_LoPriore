@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 import '../API/api_constants.dart';
 
 class AuthProvider with ChangeNotifier {
+  bool signedIn = false;
   late String _token;
   late DateTime _expiryDate;
   late String _UID;
@@ -26,5 +27,10 @@ class AuthProvider with ChangeNotifier {
     var response = await http
         .post(signInEndpoint, body: {'email': username, 'password': password});
     log(response.body);
+
+    if (response.statusCode == 200) {
+      signedIn = true;
+      notifyListeners();
+    }
   }
 }

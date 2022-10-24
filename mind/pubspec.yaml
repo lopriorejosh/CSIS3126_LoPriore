@@ -66,6 +66,7 @@ flutter:
   uses-material-design: true
   assets:
     - lib/Assets/film_strip.jpg
+    - lib/Assets/Mind Logo.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:

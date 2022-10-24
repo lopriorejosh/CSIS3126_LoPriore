@@ -10,11 +10,11 @@ class MoviesProvider extends ChangeNotifier {
   List<Movie> get popularMovies => _popularMovies;
 
   Future<void> FetchPopularMovies() async {
-    var topMoviesUrl = Uri.parse(ApiConstants.baseUrl +
+    var popularMoviesUrl = Uri.parse(ApiConstants.baseUrl +
         ApiConstants.popularMoviesEndpoint +
         ApiConstants.apiKey);
     try {
-      var response = await http.get(topMoviesUrl);
+      var response = await http.get(popularMoviesUrl);
       if (response.statusCode == 200) {
         //convert json data and set _popularMovies
         List<Movie> _fetchedMovies = convertFromJson(response.body).results;
