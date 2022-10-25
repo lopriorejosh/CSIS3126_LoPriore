@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../Providers/auth_provider.dart';
 
 class MyDrawer extends StatelessWidget {
   @override
@@ -27,6 +30,14 @@ class MyDrawer extends StatelessWidget {
           leading: Icon(Icons.settings),
         ),
         Divider(),
+        ListTile(
+          onTap: () {
+            Provider.of<AuthProvider>(context, listen: false).logout();
+            Navigator.of(context).pushReplacementNamed('/');
+          },
+          title: Text('Log Out'),
+          leading: Icon(Icons.exit_to_app),
+        ),
       ],
     ));
   }

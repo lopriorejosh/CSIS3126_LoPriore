@@ -5,6 +5,8 @@ import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../Providers/auth_provider.dart';
+import '../Models/http_exception.dart';
+import '../Screens/home_page.dart';
 
 enum AuthMode { Signup, Login }
 
@@ -68,25 +70,93 @@ class _AuthCardState extends State<AuthCard> {
     'password': '',
   };
   var _isLoading = false;
+  bool _signedIn = false;
+
   final _passwordController = TextEditingController();
 
-  void _submit() {
+  void _showErrorDialog(String message) {
+    showDialog(
+        context: context,
+        builder: ((context) => AlertDialog(
+              title: Text(
+                "An error occured",
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.labelSmall,
+              ),
+              content: Text(
+                message,
+                style: Theme.of(context).textTheme.labelMedium,
+              ),
+              actions: [
+                ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text(
+                      "Ok",
+                      style: Theme.of(context).textTheme.labelSmall,
+                    ))
+              ],
+            )));
+  }
+
+  Future<void> _submit() async {
+//client side validate
     if (!_formKey.currentState!.validate()) {
       // Invalid!
       return;
     }
+    //save inputs
     _formKey.currentState!.save();
     setState(() {
       _isLoading = true;
     });
-    if (_authMode == AuthMode.Login) {
-      // Log user in
-      Provider.of<AuthProvider>(context, listen: false)
-          .signIn(_authData['email'], _authData['password']);
-    } else {
-      // Sign user up
-      Provider.of<AuthProvider>(context, listen: false)
-          .signup(_authData['email'], _authData['password']);
+//attempt to sign in/up, success = go to home page
+    try {
+      if (_authMode == AuthMode.Login) {
+        // Log user in
+        await Provider.of<AuthProvider>(context, listen: false)
+            .signIn(_authData['email'], _authData['password']);
+      } else {
+        // Sign user up
+        await Provider.of<AuthProvider>(context, listen: false)
+            .signup(_authData['email'], _authData['password']);
+      }
+      setState(() {
+        _isLoading = false;
+        Navigator.of(context).pushReplacementNamed(HomePage.routeName);
+      });
+//if error show message based on known errors, else show error occurred
+    } on HttpException catch (error) {
+      var errorMessage = "An error Occured";
+
+      if (error.toString().contains('EMAIL_EXISTS')) {
+        errorMessage = "This email account is already taken";
+      } else if (error.toString().contains('INVALID_EMAIL')) {
+        errorMessage = "The provided email is not valid";
+      } else if (error.toString().contains('WEAK_PASSWORD')) {
+        errorMessage = "This password is too weak";
+      } else if (error.toString().contains('INVALID_PASSWORD')) {
+        errorMessage = "Invalid Password";
+      } else if (error.toString().contains('EMAIL_NOT_FOUND')) {
+        errorMessage = "Email Not Found";
+      }
+      _showErrorDialog(errorMessage);
+    } catch (error) {
+      var errorMessage = "Could not authenticate. Please try again later.";
+
+      if (error.toString().contains('EMAIL_EXISTS')) {
+        errorMessage = "This email account is already taken";
+      } else if (error.toString().contains('INVALID_EMAIL')) {
+        errorMessage = "The provided email is not valid";
+      } else if (error.toString().contains('WEAK_PASSWORD')) {
+        errorMessage = "This password is too weak";
+      } else if (error.toString().contains('INVALID_PASSWORD')) {
+        errorMessage = "Invalid Password";
+      } else if (error.toString().contains('EMAIL_NOT_FOUND')) {
+        errorMessage = "Email Not Found";
+      }
+      _showErrorDialog(errorMessage);
     }
     setState(() {
       _isLoading = false;
