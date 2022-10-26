@@ -8,6 +8,7 @@ import './Screens/home_page.dart';
 import './Providers/movies_provider.dart';
 import './Screens/movie_description_page.dart';
 import './Providers/auth_provider.dart';
+import './Screens/SplashScreen.dart';
 
 void main() {
   runApp(MultiProvider(
@@ -64,7 +65,16 @@ class MyApp extends StatelessWidget {
                 appBarTheme: const AppBarTheme(color: Colors.transparent),
               ),
               //signed in from token go to home else sign in
-              home: authProvider.isAuth ? HomePage() : AuthScreen(),
+              home: authProvider.isAuth
+                  ? HomePage()
+                  : FutureBuilder(
+                      future: authProvider.tryAutoLogin(),
+                      builder: (context, authResultSnapshot) =>
+                          authResultSnapshot.connectionState ==
+                                  ConnectionState.waiting
+                              ? SplashScreen()
+                              : AuthScreen(),
+                    ),
               routes: {
                 HomePage.routeName: (context) => HomePage(),
                 MovieDescriptionPage.routeName: (context) =>
