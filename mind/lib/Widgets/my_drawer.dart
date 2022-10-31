@@ -19,7 +19,9 @@ class MyDrawer extends StatelessWidget {
         ),
         Divider(),
         ListTile(
-          onTap: () {},
+          onTap: () {
+            Navigator.of(context).pushReplacementNamed('/friendsLookup');
+          },
           title: Text('Friends'),
           leading: Icon(Icons.people),
         ),

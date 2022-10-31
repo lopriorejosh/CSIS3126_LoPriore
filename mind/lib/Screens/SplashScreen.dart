@@ -10,7 +10,7 @@ class SplashScreen extends StatelessWidget {
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         decoration: const BoxDecoration(color: Colors.black),
-        child: Image.asset('Assets/Mind Logo.png'),
+        child: Image.asset('lib/Assets/Mind Logo.png'),
       ),
     );
   }

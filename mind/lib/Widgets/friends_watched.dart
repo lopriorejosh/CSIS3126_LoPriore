@@ -87,7 +87,7 @@ class _FriendsWatchedState extends State<FriendsWatched> {
             controller: scroller,
             children: [
               FriendCard(friends[0], popularMovies[0]),
-              FriendCard(friends[1], popularMovies[1]),
+              /*FriendCard(friends[1], popularMovies[1]),
               FriendCard(friends[2], popularMovies[2]),
               FriendCard(friends[2], popularMovies[3]),
               FriendCard(friends[2], popularMovies[4]),
@@ -95,7 +95,7 @@ class _FriendsWatchedState extends State<FriendsWatched> {
               FriendCard(friends[2], popularMovies[6]),
               FriendCard(friends[2], popularMovies[7]),
               FriendCard(friends[2], popularMovies[8]),
-              FriendCard(friends[2], popularMovies[9]),
+              FriendCard(friends[2], popularMovies[9]),*/
             ],
           ),
         ),

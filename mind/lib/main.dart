@@ -9,6 +9,7 @@ import './Providers/movies_provider.dart';
 import './Screens/movie_description_page.dart';
 import './Providers/auth_provider.dart';
 import './Screens/SplashScreen.dart';
+import './Screens/friend_lookup_page.dart';
 
 void main() {
   runApp(MultiProvider(
@@ -34,9 +35,8 @@ class MyApp extends StatelessWidget {
                 bottomAppBarColor: Colors.green,
                 textTheme: TextTheme(
                   titleLarge: TextStyle(
-                    fontFamily: GoogleFonts.satisfy().fontFamily,
-                    fontSize: 30.0,
-                  ),
+                      fontFamily: GoogleFonts.yesevaOne().fontFamily,
+                      fontStyle: FontStyle.italic),
                   titleMedium: TextStyle(
                     fontFamily: GoogleFonts.play().fontFamily,
                     fontSize: 30.0,
@@ -79,7 +79,8 @@ class MyApp extends StatelessWidget {
                 HomePage.routeName: (context) => HomePage(),
                 MovieDescriptionPage.routeName: (context) =>
                     MovieDescriptionPage(),
-                AuthScreen.routeName: (context) => AuthScreen()
+                AuthScreen.routeName: (context) => AuthScreen(),
+                FriendsLookupPage.routeName: (context) => FriendsLookupPage(),
               },
             ));
   }
