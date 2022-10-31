@@ -13,7 +13,9 @@ class MyDrawer extends StatelessWidget {
           child: Image.asset('lib/Assets/film_strip.jpg'),
         ),
         ListTile(
-          onTap: () {},
+          onTap: () {
+            Navigator.of(context).pushReplacementNamed('/');
+          },
           title: Text('Home'),
           leading: Icon(Icons.home),
         ),
@@ -27,7 +29,9 @@ class MyDrawer extends StatelessWidget {
         ),
         Divider(),
         ListTile(
-          onTap: () {},
+          onTap: () {
+            Navigator.of(context).pushReplacementNamed('/settings');
+          },
           title: Text('Settings'),
           leading: Icon(Icons.settings),
         ),

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../Widgets/my_appbar.dart';
 import '../Providers/friends_provider.dart';
+import '../Widgets/my_drawer.dart';
+import '../Widgets/my_appbar.dart';
 
 class FriendsLookupPage extends StatelessWidget {
   static const routeName = '/friendsLookup';
@@ -11,6 +12,7 @@ class FriendsLookupPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MyAppBar(),
+      drawer: MyDrawer(),
       body: MyFriendsList(),
     );
   }

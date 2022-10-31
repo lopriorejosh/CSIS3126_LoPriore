@@ -14,4 +14,9 @@ class ApiConstants {
 
   static String anonomousEndpoint =
       "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=$fireBaseAPIKey";
+
+  static String fireBaseDatabaseUrl =
+      "https://mind-e9eba-default-rtdb.firebaseio.com/";
+
+  static String dataBaseUsers = "/users";
 }

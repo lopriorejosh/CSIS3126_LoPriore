@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:mind/Providers/friends_provider.dart';
-import './Screens/auth_page.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import './Screens/home_page.dart';
 import './Providers/movies_provider.dart';
-import './Screens/movie_description_page.dart';
 import './Providers/auth_provider.dart';
+import './Providers/friends_provider.dart';
+import './Screens/auth_page.dart';
+import './Screens/home_page.dart';
+import './Screens/movie_description_page.dart';
 import './Screens/SplashScreen.dart';
 import './Screens/friend_lookup_page.dart';
+import './Screens/settings_page.dart';
 
 void main() {
   runApp(MultiProvider(
@@ -81,6 +82,7 @@ class MyApp extends StatelessWidget {
                     MovieDescriptionPage(),
                 AuthScreen.routeName: (context) => AuthScreen(),
                 FriendsLookupPage.routeName: (context) => FriendsLookupPage(),
+                SettingsPage.routeName: (context) => SettingsPage(),
               },
             ));
   }

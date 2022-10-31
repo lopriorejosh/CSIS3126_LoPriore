@@ -74,7 +74,8 @@ class AuthProvider with ChangeNotifier {
   }
 
   Future<void> signup(String? email, String? password) async {
-    return _authenticate(email, password, ApiConstants.newUserEndpoint);
+    _authenticate(email, password, ApiConstants.newUserEndpoint);
+    return addUsersToDatabase();
   }
 
   Future<void> signIn(String? email, String? password) async {
@@ -121,5 +122,18 @@ class AuthProvider with ChangeNotifier {
     notifyListeners();
     _autoLogout();
     return true;
+  }
+
+  Future<void> addUsersToDatabase() async {
+    final url = Uri.parse(
+        "${ApiConstants.fireBaseDatabaseUrl}${ApiConstants.dataBaseUsers}/users");
+    try {
+      final response = await http.post(url,
+          body: json.encode(
+            {'UID': _UID},
+          ));
+    } catch (error) {
+      rethrow;
+    }
   }
 }
