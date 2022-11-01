@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -74,8 +75,8 @@ class AuthProvider with ChangeNotifier {
   }
 
   Future<void> signup(String? email, String? password) async {
-    _authenticate(email, password, ApiConstants.newUserEndpoint);
-    return addUsersToDatabase();
+    return _authenticate(email, password, ApiConstants.newUserEndpoint);
+    //addUsersToDatabase();
   }
 
   Future<void> signIn(String? email, String? password) async {
@@ -126,12 +127,14 @@ class AuthProvider with ChangeNotifier {
 
   Future<void> addUsersToDatabase() async {
     final url = Uri.parse(
-        "${ApiConstants.fireBaseDatabaseUrl}${ApiConstants.dataBaseUsers}/users");
+        "${ApiConstants.fireBaseDatabaseUrl}${ApiConstants.dataBaseUsers}/$UID.json");
     try {
+      print('send user');
       final response = await http.post(url,
           body: json.encode(
             {'UID': _UID},
           ));
+      print(response.body);
     } catch (error) {
       rethrow;
     }
