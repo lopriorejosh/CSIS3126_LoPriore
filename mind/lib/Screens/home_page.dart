@@ -32,7 +32,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     var popularMovies = Provider.of<MoviesProvider>(context).popularMovies;
-    //var friendsList = Provider.of<FriendsProvider>(context).friendsList;
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -61,7 +60,6 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 RowOfMovies(popularMovies),
-                FriendsWatched(),
               ]),
             ),
       bottomNavigationBar: WaterDropNavBar(

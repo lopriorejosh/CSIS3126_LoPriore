@@ -5,8 +5,19 @@ import '../Providers/friends_provider.dart';
 import '../Widgets/my_drawer.dart';
 import '../Widgets/my_appbar.dart';
 
-class FriendsLookupPage extends StatelessWidget {
+class FriendsLookupPage extends StatefulWidget {
   static const routeName = '/friendsLookup';
+
+  @override
+  State<FriendsLookupPage> createState() => _FriendsLookupPageState();
+}
+
+class _FriendsLookupPageState extends State<FriendsLookupPage> {
+  @override
+  void initState() {
+    Provider.of<FriendsProvider>(context, listen: false).fetchFriends(context);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

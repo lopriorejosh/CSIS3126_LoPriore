@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:async';
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -32,9 +31,52 @@ class AuthProvider with ChangeNotifier {
     return _UID;
   }
 
-  Future<void> _authenticate(
-      String? email, String? password, String endpoint) async {
-    final url = Uri.parse(endpoint);
+  Future<void> signup(String? email, String? username, String? password) async {
+    final url = Uri.parse(ApiConstants.newUserEndpoint);
+    try {
+      final response = await http.post(
+        url,
+        body: json.encode(
+          {
+            'email': email,
+            'password': password,
+            'returnSecureToken': true,
+          },
+        ),
+      );
+      final responseData = json.decode(response.body);
+      if (responseData['error'] != null) {
+        return Future.error(HttpException(responseData['error']['message']));
+      }
+      _token = responseData['idToken'];
+      _UID = responseData['localId'];
+      _expiryDate = DateTime.now().add(
+        Duration(
+          seconds: int.parse(
+            responseData['expiresIn'],
+          ),
+        ),
+      );
+      //if signing up
+      addUsersToDatabase(username);
+
+      _autoLogout();
+      notifyListeners();
+      //used to store sign in data on the device for auto sign in
+      final prefs = await SharedPreferences.getInstance();
+      final userData = json.encode({
+        'token': _token,
+        'UID': _UID,
+        'expiryDate': _expiryDate!.toIso8601String()
+      });
+      prefs.setString('userData', userData);
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  Future<void> signIn(String? email, String? password) async {
+    final url = Uri.parse(ApiConstants.signInUserEndpoint);
     try {
       final response = await http.post(
         url,
@@ -72,15 +114,6 @@ class AuthProvider with ChangeNotifier {
     } catch (error) {
       rethrow;
     }
-  }
-
-  Future<void> signup(String? email, String? password) async {
-    return _authenticate(email, password, ApiConstants.newUserEndpoint);
-    //addUsersToDatabase();
-  }
-
-  Future<void> signIn(String? email, String? password) async {
-    return _authenticate(email, password, ApiConstants.signInUserEndpoint);
   }
 
   Future<void> logout() async {
@@ -125,16 +158,15 @@ class AuthProvider with ChangeNotifier {
     return true;
   }
 
-  Future<void> addUsersToDatabase() async {
+//when an account is created set uid in users database
+  Future<void> addUsersToDatabase(String? username) async {
     final url = Uri.parse(
         "${ApiConstants.fireBaseDatabaseUrl}${ApiConstants.dataBaseUsers}/$UID.json");
     try {
-      print('send user');
       final response = await http.post(url,
           body: json.encode(
-            {'UID': _UID},
+            {'username': username},
           ));
-      print(response.body);
     } catch (error) {
       rethrow;
     }

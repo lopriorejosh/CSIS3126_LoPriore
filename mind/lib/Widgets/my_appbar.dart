@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:mind/Providers/auth_provider.dart';
-import '../Providers/movies_provider.dart';
-import '../Models/movie_model.dart';
+import '../Providers/friends_provider.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
-    var provider = Provider.of<AuthProvider>(context);
+    var provider = Provider.of<FriendsProvider>(context);
 
     return AppBar(
         elevation: 0,
@@ -21,7 +19,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           IconButton(
               onPressed: () {
                 //navigate to search page
-                provider.addUsersToDatabase();
+                provider.addFriend('jlopriore', context);
               },
               icon: const Icon(Icons.search)),
         ]);

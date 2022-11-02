@@ -19,4 +19,6 @@ class ApiConstants {
       "https://mind-e9eba-default-rtdb.firebaseio.com/";
 
   static String dataBaseUsers = "/users";
+
+  static String addFriend = "";
 }

@@ -68,6 +68,7 @@ class _AuthCardState extends State<AuthCard> {
   Map<String, String> _authData = {
     'email': '',
     'password': '',
+    'username': '',
   };
   var _isLoading = false;
   bool _signedIn = false;
@@ -119,8 +120,8 @@ class _AuthCardState extends State<AuthCard> {
             .signIn(_authData['email'], _authData['password']);
       } else {
         // Sign user up
-        await Provider.of<AuthProvider>(context, listen: false)
-            .signup(_authData['email'], _authData['password']);
+        await Provider.of<AuthProvider>(context, listen: false).signup(
+            _authData['email'], _authData['username'], _authData['password']);
       }
       setState(() {
         _isLoading = false;
@@ -209,6 +210,23 @@ class _AuthCardState extends State<AuthCard> {
                     _authData['email'] = value!;
                   },
                 ),
+                _authMode == AuthMode.Login
+                    ? Container()
+                    : TextFormField(
+                        decoration:
+                            const InputDecoration(labelText: 'Username'),
+                        keyboardType: TextInputType.name,
+                        validator: (value) {
+                          //increase validation not fully accurate
+                          if (value!.isEmpty || value.length <= 5) {
+                            return 'Username Invalid!';
+                          }
+                          return null;
+                        },
+                        onSaved: (value) {
+                          _authData['username'] = value!;
+                        },
+                      ),
                 TextFormField(
                   decoration: const InputDecoration(labelText: 'Password'),
                   obscureText: true,
