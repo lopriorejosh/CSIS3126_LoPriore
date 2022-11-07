@@ -3,7 +3,19 @@ import '../Models/movie_model.dart';
 class Friend {
   final String UID;
   final String username;
-  bool onlineStatus;
+  bool status;
 
-  Friend(this.UID, this.username, this.onlineStatus);
+  Friend({
+    required this.UID,
+    required this.username,
+    required this.status,
+  });
+
+//convert json data to friend model
+  factory Friend.fromRTDB(Map<String, dynamic> data) {
+    return Friend(
+        UID: data['UID'],
+        username: data['username'],
+        status: data['status'] ?? false);
+  }
 }

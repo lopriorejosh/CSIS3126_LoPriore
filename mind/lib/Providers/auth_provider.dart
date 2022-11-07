@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 import '../Models/http_exception.dart';
 import '../API/api_constants.dart';
@@ -58,7 +59,7 @@ class AuthProvider with ChangeNotifier {
         ),
       );
       //if signing up
-      addUsersToDatabase(username);
+      addUsersToDatabase(email, username);
 
       _autoLogout();
       notifyListeners();
@@ -158,17 +159,24 @@ class AuthProvider with ChangeNotifier {
     return true;
   }
 
-//when an account is created set uid in users database
-  Future<void> addUsersToDatabase(String? username) async {
-    final url = Uri.parse(
-        "${ApiConstants.fireBaseDatabaseUrl}${ApiConstants.dataBaseUsers}/$UID.json");
-    try {
-      final response = await http.post(url,
-          body: json.encode(
-            {'username': username},
-          ));
-    } catch (error) {
-      rethrow;
+//when an account is created set user in database
+  Future<void> addUsersToDatabase(String? email, String? username) async {
+    DatabaseReference ref = FirebaseDatabase.instance.ref('/users/$UID');
+
+    await ref.set({
+      "email": email,
+      "username": username,
+    });
+  }
+
+  Future<String> getAccountInfo(String? UID) async {
+    final ref = FirebaseDatabase.instance.ref();
+    final snapshot = await ref.child('users/$_UID/username').get();
+    if (snapshot.exists) {
+      print(snapshot.value);
+      return snapshot.value.toString();
+    } else {
+      return 'Anonymous';
     }
   }
 }

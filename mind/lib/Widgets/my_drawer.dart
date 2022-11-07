@@ -6,11 +6,18 @@ import '../Providers/auth_provider.dart';
 class MyDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final authProv = Provider.of<AuthProvider>(context);
+    final username = authProv.getAccountInfo(authProv.UID);
     return Drawer(
         child: ListView(
       children: [
         DrawerHeader(
-          child: Image.asset('lib/Assets/film_strip.jpg'),
+          child: Column(
+            children: [
+              Expanded(child: Image.asset('lib/Assets/launcher_icon.png')),
+              Text('Welcome')
+            ],
+          ),
         ),
         ListTile(
           onTap: () {

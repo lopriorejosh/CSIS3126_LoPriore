@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mind/Models/friend_model.dart';
 import 'package:provider/provider.dart';
 
 import '../Providers/friends_provider.dart';
@@ -19,7 +20,12 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           IconButton(
               onPressed: () {
                 //navigate to search page
-                provider.addFriend('jlopriore', context);
+                provider.addFriend(
+                    Friend(
+                        UID: 'dsfdsfsdfxzxdas',
+                        username: 'jlopriore',
+                        status: true),
+                    context);
               },
               icon: const Icon(Icons.search)),
         ]);
