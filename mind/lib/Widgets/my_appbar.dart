@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:mind/Models/friend_model.dart';
 import 'package:provider/provider.dart';
 
-import '../Providers/friends_provider.dart';
+import '../Providers/account_provider.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
-    var provider = Provider.of<FriendsProvider>(context);
+    var provider = Provider.of<AccountProvider>(context, listen: false);
 
     return AppBar(
         elevation: 0,
@@ -20,12 +20,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           IconButton(
               onPressed: () {
                 //navigate to search page
-                provider.addFriend(
-                    Friend(
-                        UID: 'dsfdsfsdfxzxdas',
-                        username: 'jlopriore',
-                        status: true),
-                    context);
+                provider.fetchAccountInfo(context);
               },
               icon: const Icon(Icons.search)),
         ]);

@@ -3,7 +3,7 @@ import 'package:water_drop_nav_bar/water_drop_nav_bar.dart';
 import 'package:provider/provider.dart';
 
 import '../Providers/movies_provider.dart';
-import '../Providers/friends_provider.dart';
+import '../Providers/account_provider.dart';
 import '../Widgets/my_appbar.dart';
 import '../Widgets/top_movie.dart';
 import '../Widgets/row_of_movies.dart';

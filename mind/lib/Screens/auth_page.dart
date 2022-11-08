@@ -1,4 +1,4 @@
-import 'dart:math';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -7,6 +7,9 @@ import 'package:google_fonts/google_fonts.dart';
 import '../Providers/auth_provider.dart';
 import '../Models/http_exception.dart';
 import '../Screens/home_page.dart';
+import '../Widgets/image_selection.dart';
+import '../Widgets/image_selection.dart';
+import '../Models/user_model.dart';
 
 enum AuthMode { Signup, Login }
 
@@ -45,7 +48,8 @@ class AuthScreen extends StatelessWidget {
                   child: Image.asset('lib/Assets/Mind Logo.png'),
                 ),
                 Flexible(
-                  flex: deviceSize.width > 600 ? 2 : 1,
+                  flex: 2,
+                  //flex: deviceSize.width > 600 ? 2 : 1,
                   child: AuthCard(),
                 ),
               ],
@@ -70,10 +74,17 @@ class _AuthCardState extends State<AuthCard> {
     'password': '',
     'username': '',
   };
+  User newUser =
+      User(username: '', email: '', password: '', UID: '', profilePic: null);
+
   var _isLoading = false;
   bool _signedIn = false;
 
   final _passwordController = TextEditingController();
+
+  void _pickedImage(File image) {
+    newUser.profilePic = image;
+  }
 
   void _showErrorDialog(String message) {
     showDialog(
@@ -103,8 +114,13 @@ class _AuthCardState extends State<AuthCard> {
 
   Future<void> _submit() async {
 //client side validate
+
     if (!_formKey.currentState!.validate()) {
       // Invalid!
+      return;
+    }
+    if (newUser.profilePic == null && _authMode == AuthMode.Signup) {
+      _showErrorDialog('Please provide a profile picture');
       return;
     }
     //save inputs
@@ -116,12 +132,14 @@ class _AuthCardState extends State<AuthCard> {
     try {
       if (_authMode == AuthMode.Login) {
         // Log user in
-        await Provider.of<AuthProvider>(context, listen: false)
-            .signIn(_authData['email'], _authData['password']);
+        await Provider.of<AuthProvider>(context, listen: false).signIn(
+            //_authData['email'], _authData['password']
+            newUser);
       } else {
         // Sign user up
         await Provider.of<AuthProvider>(context, listen: false).signup(
-            _authData['email'], _authData['username'], _authData['password']);
+            //_authData['email'], _authData['username'], _authData['password']
+            newUser);
       }
       setState(() {
         _isLoading = false;
@@ -145,18 +163,6 @@ class _AuthCardState extends State<AuthCard> {
       _showErrorDialog(errorMessage);
     } catch (error) {
       var errorMessage = "Could not authenticate. Please try again later.";
-
-      if (error.toString().contains('EMAIL_EXISTS')) {
-        errorMessage = "This email account is already taken";
-      } else if (error.toString().contains('INVALID_EMAIL')) {
-        errorMessage = "The provided email is not valid";
-      } else if (error.toString().contains('WEAK_PASSWORD')) {
-        errorMessage = "This password is too weak";
-      } else if (error.toString().contains('INVALID_PASSWORD')) {
-        errorMessage = "Invalid Password";
-      } else if (error.toString().contains('EMAIL_NOT_FOUND')) {
-        errorMessage = "Email Not Found";
-      }
       _showErrorDialog(errorMessage);
     }
     setState(() {
@@ -185,8 +191,9 @@ class _AuthCardState extends State<AuthCard> {
       ),
       elevation: 8.0,
       child: Container(
-        height: deviceSize.height * .5,
-        //_authMode == AuthMode.Signup ? 320 : 260,
+        height: _authMode == AuthMode.Signup
+            ? deviceSize.height * .85
+            : deviceSize.height * .45,
         constraints:
             BoxConstraints(minHeight: _authMode == AuthMode.Signup ? 320 : 260),
         width: deviceSize.width * 0.75,
@@ -196,6 +203,9 @@ class _AuthCardState extends State<AuthCard> {
           child: SingleChildScrollView(
             child: Column(
               children: <Widget>[
+                _authMode == AuthMode.Login
+                    ? Container()
+                    : ImageSelection(_pickedImage),
                 TextFormField(
                   decoration: const InputDecoration(labelText: 'E-Mail'),
                   keyboardType: TextInputType.emailAddress,
@@ -207,7 +217,8 @@ class _AuthCardState extends State<AuthCard> {
                     return null;
                   },
                   onSaved: (value) {
-                    _authData['email'] = value!;
+                    //_authData['email'] = value!;
+                    newUser.email = value!;
                   },
                 ),
                 _authMode == AuthMode.Login
@@ -224,7 +235,8 @@ class _AuthCardState extends State<AuthCard> {
                           return null;
                         },
                         onSaved: (value) {
-                          _authData['username'] = value!;
+                          //_authData['username'] = value!;
+                          newUser.username = value!;
                         },
                       ),
                 TextFormField(
@@ -237,7 +249,8 @@ class _AuthCardState extends State<AuthCard> {
                     }
                   },
                   onSaved: (value) {
-                    _authData['password'] = value!;
+                    //_authData['password'] = value!;
+                    newUser.password = value!;
                   },
                 ),
                 const SizedBox(

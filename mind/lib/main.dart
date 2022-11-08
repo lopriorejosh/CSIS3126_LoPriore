@@ -6,7 +6,7 @@ import 'package:firebase_core/firebase_core.dart';
 
 import './Providers/movies_provider.dart';
 import './Providers/auth_provider.dart';
-import './Providers/friends_provider.dart';
+import 'Providers/account_provider.dart';
 import './Screens/auth_page.dart';
 import './Screens/home_page.dart';
 import './Screens/movie_description_page.dart';
@@ -23,7 +23,7 @@ Future<void> main() async {
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider<MoviesProvider>(create: (_) => MoviesProvider()),
-      ChangeNotifierProvider<FriendsProvider>(create: (_) => FriendsProvider()),
+      ChangeNotifierProvider<AccountProvider>(create: (_) => AccountProvider()),
       ChangeNotifierProvider<AuthProvider>(create: (_) => AuthProvider()),
     ],
     child: MyApp(),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mind/Providers/friends_provider.dart';
+import 'package:mind/Providers/account_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../Models/friend_model.dart';
@@ -67,7 +67,7 @@ class _FriendsWatchedState extends State<FriendsWatched> {
   @override
   Widget build(BuildContext context) {
     var popularMovies = Provider.of<MoviesProvider>(context).popularMovies;
-    var friends = Provider.of<FriendsProvider>(context).friendsList;
+    var friends = Provider.of<AccountProvider>(context).friendsList;
 
     return Column(
       children: [

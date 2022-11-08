@@ -5,8 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 import '../Models/http_exception.dart';
+import '../Models/user_model.dart';
 import '../API/api_constants.dart';
 
 class AuthProvider with ChangeNotifier {
@@ -32,15 +34,15 @@ class AuthProvider with ChangeNotifier {
     return _UID;
   }
 
-  Future<void> signup(String? email, String? username, String? password) async {
+  Future<void> signup(User newUser) async {
     final url = Uri.parse(ApiConstants.newUserEndpoint);
     try {
       final response = await http.post(
         url,
         body: json.encode(
           {
-            'email': email,
-            'password': password,
+            'email': newUser.email,
+            'password': newUser.password,
             'returnSecureToken': true,
           },
         ),
@@ -59,7 +61,7 @@ class AuthProvider with ChangeNotifier {
         ),
       );
       //if signing up
-      addUsersToDatabase(email, username);
+      addUsersToDatabase(newUser);
 
       _autoLogout();
       notifyListeners();
@@ -76,15 +78,15 @@ class AuthProvider with ChangeNotifier {
     }
   }
 
-  Future<void> signIn(String? email, String? password) async {
+  Future<void> signIn(User user) async {
     final url = Uri.parse(ApiConstants.signInUserEndpoint);
     try {
       final response = await http.post(
         url,
         body: json.encode(
           {
-            'email': email,
-            'password': password,
+            'email': user.email,
+            'password': user.password,
             'returnSecureToken': true,
           },
         ),
@@ -160,13 +162,17 @@ class AuthProvider with ChangeNotifier {
   }
 
 //when an account is created set user in database
-  Future<void> addUsersToDatabase(String? email, String? username) async {
+  Future<void> addUsersToDatabase(User newUser) async {
     DatabaseReference ref = FirebaseDatabase.instance.ref('/users/$UID');
+    final storage = FirebaseStorage.instance
+        .ref()
+        .child('usersProfilePictures/$UID' + '.jpg');
 
     await ref.set({
-      "email": email,
-      "username": username,
+      "email": newUser.email,
+      "username": newUser.username,
     });
+    await storage.putFile(newUser.profilePic!);
   }
 
   Future<String> getAccountInfo(String? UID) async {

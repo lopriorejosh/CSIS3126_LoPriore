@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mind/Providers/account_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../Providers/auth_provider.dart';
@@ -6,8 +7,7 @@ import '../Providers/auth_provider.dart';
 class MyDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final authProv = Provider.of<AuthProvider>(context);
-    final username = authProv.getAccountInfo(authProv.UID);
+    final accountInfo = Provider.of<AccountProvider>(context).myAccountInfo;
     return Drawer(
         child: ListView(
       children: [
@@ -15,7 +15,7 @@ class MyDrawer extends StatelessWidget {
           child: Column(
             children: [
               Expanded(child: Image.asset('lib/Assets/launcher_icon.png')),
-              Text('Welcome')
+              Text('Welcome' + accountInfo.username!)
             ],
           ),
         ),

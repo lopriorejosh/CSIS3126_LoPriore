@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../Providers/friends_provider.dart';
+import '../Providers/account_provider.dart';
 import '../Widgets/my_drawer.dart';
 import '../Widgets/my_appbar.dart';
 
@@ -15,7 +15,7 @@ class FriendsLookupPage extends StatefulWidget {
 class _FriendsLookupPageState extends State<FriendsLookupPage> {
   @override
   void initState() {
-    Provider.of<FriendsProvider>(context, listen: false).fetchFriends(context);
+    Provider.of<AccountProvider>(context, listen: false).fetchFriends(context);
     super.initState();
   }
 
@@ -32,7 +32,7 @@ class _FriendsLookupPageState extends State<FriendsLookupPage> {
 class MyFriendsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var friends = Provider.of<FriendsProvider>(context).friendsList;
+    var friends = Provider.of<AccountProvider>(context).friendsList;
 
     return ListView.builder(
         itemCount: friends.length,
