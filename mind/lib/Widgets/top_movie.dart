@@ -24,7 +24,7 @@ class TopMovie extends StatelessWidget {
         child: Image.network(
           ApiConstants.imageEndpoint +
               ApiConstants.originalImageEndpoint +
-              topMovie.backdropPath,
+              topMovie.imageUrl,
           fit: BoxFit.fitHeight,
           height: MediaQuery.of(context).size.height * .6,
           width: MediaQuery.of(context).size.width,
@@ -39,7 +39,7 @@ class TopMovie extends StatelessWidget {
           fit: BoxFit.scaleDown,
           child: Text(
             topMovie.title,
-            style: const TextStyle(fontSize: 25),
+            style: Theme.of(context).textTheme.titleLarge,
             maxLines: 1,
           ),
         ),
@@ -53,13 +53,13 @@ class TopMovie extends StatelessWidget {
               MovieDescriptionPage.routeName,
               arguments: Movie(
                 title: topMovie.title,
-                overview: topMovie.overview,
+                description: topMovie.description,
                 id: topMovie.id,
-                backdropPath: topMovie.backdropPath,
-                genreIds: topMovie.genreIds,
-                popularity: topMovie.popularity,
-                posterPath: topMovie.posterPath,
-                releaseDate: topMovie.releaseDate,
+                imageUrl: topMovie.imageUrl,
+                genres: topMovie.genres,
+                watchProviders: topMovie.watchProviders,
+                reviews: topMovie.reviews,
+                runtime: topMovie.runtime,
                 video: topMovie.video,
               ),
             );

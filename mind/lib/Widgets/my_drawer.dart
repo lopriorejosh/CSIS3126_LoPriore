@@ -51,6 +51,14 @@ class MyDrawer extends StatelessWidget {
           title: Text('Log Out'),
           leading: Icon(Icons.exit_to_app),
         ),
+        Divider(),
+        ListTile(
+          onTap: () {
+            Navigator.of(context).pushReplacementNamed('/dummy');
+          },
+          title: Text('Dummy'),
+          leading: Icon(Icons.radar),
+        ),
       ],
     ));
   }

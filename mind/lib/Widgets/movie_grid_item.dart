@@ -18,16 +18,15 @@ class MovieGridItem extends StatelessWidget {
           onTap: () => Navigator.of(context).pushNamed(
                 MovieDescriptionPage.routeName,
                 arguments: Movie(
-                  title: movieItem.title,
-                  overview: movieItem.overview,
-                  id: movieItem.id,
-                  backdropPath: movieItem.backdropPath,
-                  genreIds: movieItem.genreIds,
-                  popularity: movieItem.popularity,
-                  posterPath: movieItem.posterPath,
-                  releaseDate: movieItem.releaseDate,
-                  video: movieItem.video,
-                ),
+                    title: movieItem.title,
+                    description: movieItem.description,
+                    id: movieItem.id,
+                    imageUrl: movieItem.imageUrl,
+                    genres: movieItem.genres,
+                    video: movieItem.video,
+                    reviews: movieItem.reviews,
+                    watchProviders: movieItem.watchProviders,
+                    runtime: movieItem.runtime),
               ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -35,7 +34,7 @@ class MovieGridItem extends StatelessWidget {
               Image.network(
                 ApiConstants.imageEndpoint +
                     ApiConstants.originalImageEndpoint +
-                    movieItem.backdropPath,
+                    movieItem.imageUrl,
                 fit: BoxFit.fill,
               ),
               Divider(),

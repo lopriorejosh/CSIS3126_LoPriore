@@ -23,15 +23,17 @@ class _AccountPageState extends State<AccountPage> {
       body: Center(
         child: Column(
           children: [
-            accountInfo.profPicUrl == null
-                ? CircleAvatar()
-                : SizedBox(
-                    height: MediaQuery.of(context).size.height * .3,
-                    child: ClipRRect(
-                        borderRadius: BorderRadius.all(Radius.circular(40)),
-                        child: Image.network(accountInfo.profPicUrl!)),
-                  ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * .3,
+              child: ClipRRect(
+                  borderRadius: BorderRadius.all(Radius.circular(40)),
+                  child: accountInfo.profPicUrl == null
+                      ? Placeholder()
+                      : Image.network(accountInfo.profPicUrl!)),
+            ),
             Text("Account Info: "),
+            Text(accountInfo.username!),
+            Text(accountInfo.email!),
           ],
         ),
       ),

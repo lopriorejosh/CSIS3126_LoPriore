@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:expandable_text/expandable_text.dart';
+import 'package:provider/provider.dart';
 
+import '../Providers/movies_provider.dart';
 import '../Widgets/my_appbar.dart';
 import '../Models/movie_model.dart';
 import '../API/api_constants.dart';
@@ -36,7 +38,7 @@ class MovieDescriptionPage extends StatelessWidget {
                   child: Image.network(
                     ApiConstants.imageEndpoint +
                         ApiConstants.originalImageEndpoint +
-                        movieInfo.backdropPath,
+                        movieInfo.imageUrl,
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -61,14 +63,15 @@ class MovieDescriptionPage extends StatelessWidget {
                 style: Theme.of(context).textTheme.labelSmall,
               ),
               onPressed: () {
-                print(movieInfo.genreIds[0]);
+                //Provider.of<MoviesProvider>(context, listen: false)
+                //  .getMovieDetails(movieInfo);
               },
             ),
             const Divider(),
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: ExpandableText(
-                movieInfo.overview,
+                movieInfo.description,
                 expandText: 'Show More',
                 collapseText: 'Show Less',
                 maxLines: 2,

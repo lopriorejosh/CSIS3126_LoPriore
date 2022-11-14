@@ -1,104 +1,98 @@
 import 'dart:convert';
 
-ConvertJson convertFromJson(String str) =>
-    ConvertJson.fromJson(json.decode(str));
+convertPopJson convertFromPopular(String str) =>
+    convertPopJson.fromJson(json.decode(str));
 
-String convertToJson(ConvertJson data) => json.encode(data.toJson());
-
-class ConvertJson {
-  ConvertJson({
-    required this.page,
+class convertPopJson {
+  convertPopJson({
     required this.results,
-    required this.totalPages,
-    required this.totalResults,
   });
 
-  int page;
   List<Movie> results;
-  int totalPages;
-  int totalResults;
 
-  factory ConvertJson.fromJson(Map<String, dynamic> json) => ConvertJson(
-        page: json["page"],
+  factory convertPopJson.fromJson(Map<String, dynamic> json) => convertPopJson(
         results:
             List<Movie>.from(json["results"].map((x) => Movie.fromJson(x))),
-        totalPages: json["total_pages"],
-        totalResults: json["total_results"],
       );
-
-  Map<String, dynamic> toJson() => {
-        "page": page,
-        "results": List<dynamic>.from(results.map((x) => x.toJson())),
-        "total_pages": totalPages,
-        "total_results": totalResults,
-      };
 }
 
 class Movie {
-  Movie({
-    //required this.adult,
-    required this.backdropPath,
-    required this.genreIds,
-    required this.id,
-    //required this.originalLanguage,
-    //required this.originalTitle,
-    required this.overview,
-    required this.popularity,
-    required this.posterPath,
-    required this.releaseDate,
-    required this.title,
-    required this.video,
-    //required this.voteAverage,
-    //required this.voteCount,
-  });
-
-  //bool adult;
-  String backdropPath;
-  List<int> genreIds;
-  int id;
-  //String originalLanguage;
-  //String originalTitle;
-  String overview;
-  double popularity;
-  String posterPath;
-  DateTime releaseDate;
+  Movie(
+      {required this.title,
+      required this.imageUrl,
+      required this.video,
+      required this.genres,
+      required this.watchProviders,
+      required this.description,
+      required this.id,
+      required this.reviews,
+      required this.runtime});
   String title;
+  String imageUrl;
   bool video;
-  //double voteAverage;
-  //int voteCount;
+  List<Genre> genres;
+  List<WatchProviders> watchProviders;
+  String description;
+  final id;
+  List<Review> reviews;
+  double runtime;
 
   factory Movie.fromJson(Map<String, dynamic> json) => Movie(
-        //adult: json["adult"],
-        backdropPath: json["backdrop_path"],
-        genreIds: List<int>.from(json["genre_ids"].map((x) => x)),
-        id: json["id"],
-        //originalLanguage: json["original_language"],
-        //originalTitle: json["original_title"],
-        overview: json["overview"],
-        popularity: json["popularity"].toDouble(),
-        posterPath: json["poster_path"],
-        releaseDate: DateTime.parse(json["release_date"]),
-        title: json["title"],
-        video: json["video"],
-        //voteAverage: json["vote_average"].toDouble(),
-        //voteCount: json["vote_count"],
+      title: json['title'],
+      imageUrl: json['backdrop_path'],
+      video: json['video'] as bool,
+      genres: [],
+      //List<Genre>.from(json['genres'].map((genre) => Genre.fromJson(genre))),
+      watchProviders: [],
+      //List<WatchProviders>.from(json['results'].map((genre) => WatchProviders.fromJson(genre))),
+      description: json['overview'],
+      id: json['id'],
+      reviews: [],
+      //List<Review>.from(json['results'].map((review) => Review.fromJson(review))),
+      runtime: 0
+      //json['runtime']
       );
+}
 
-  Map<String, dynamic> toJson() => {
-        //"adult": adult,
-        "backdrop_path": backdropPath,
-        "genre_ids": List<dynamic>.from(genreIds.map((x) => x)),
-        "id": id,
-        //"original_language": originalLanguage,
-        //"original_title": originalTitle,
-        "overview": overview,
-        "popularity": popularity,
-        "poster_path": posterPath,
-        "release_date":
-            "${releaseDate.year.toString().padLeft(4, '0')}-${releaseDate.month.toString().padLeft(2, '0')}-${releaseDate.day.toString().padLeft(2, '0')}",
-        "title": title,
-        "video": video,
-        //"vote_average": voteAverage,
-        //"vote_count": voteCount,
-      };
+class Genre {
+  late List<String> name;
+  late List<String> id;
+
+  Genre({
+    required this.id,
+    required this.name,
+  });
+
+  //convert json data to genre class to add to movie
+  factory Genre.fromJson(Map<String, dynamic> json) =>
+      Genre(id: json['id'], name: json['name']);
+}
+
+class WatchProviders {
+  late String country;
+  late String providerName;
+
+  WatchProviders({
+    required this.country,
+    required this.providerName,
+  });
+
+//convert json data to watch providers to add to movie
+  factory WatchProviders.fromJson(Map<String, dynamic> json) => WatchProviders(
+      country: json['US'], providerName: json['flatrate']['provider_name']);
+}
+
+class Review {
+  //convert json data to review to add to movie
+  late String content;
+  late String author;
+
+  Review({
+    required this.content,
+    required this.author,
+  });
+
+//convert json data to watch providers to add to movie
+  factory Review.fromJson(Map<String, dynamic> json) => Review(
+      content: json['content'], author: json['author_details']['usernames']);
 }
