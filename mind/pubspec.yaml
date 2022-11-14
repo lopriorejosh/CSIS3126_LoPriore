@@ -48,6 +48,7 @@ dependencies:
   flutter_launcher_icons: ^0.10.0
   image_picker: ^0.8.6
   firebase_storage: ^11.0.4
+  search_page: ^2.2.0
 
 dev_dependencies:
   flutter_test:
@@ -79,6 +80,7 @@ flutter:
     - lib/Assets/film_strip.jpg
     - lib/Assets/Mind Logo.png
     - lib/Assets/launcher_icon.png
+    - lib/Assets/friends stock.jpg
 
   # To add assets to your application, add an assets section, like this:
   # assets:

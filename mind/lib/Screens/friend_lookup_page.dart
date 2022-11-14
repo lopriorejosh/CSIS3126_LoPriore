@@ -34,11 +34,34 @@ class MyFriendsList extends StatelessWidget {
   Widget build(BuildContext context) {
     var friends = Provider.of<AccountProvider>(context).friendsList;
 
-    return ListView.builder(
-        itemCount: friends.length,
-        itemBuilder: (context, index) => ListTile(
-              leading: Icon(Icons.person),
-              title: Text(friends[index].username),
-            ));
+    return friends.isEmpty
+        ? Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Image.asset('lib/Assets/friends stock.jpg'),
+              FittedBox(
+                child: Text(
+                  "Empty Friends List... Add Some Friends",
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+              ),
+              Divider(),
+              ElevatedButton(
+                  onPressed: () {
+                    //go to add friend page
+                  },
+                  child: Text("Add Friends",
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.titleLarge)),
+            ],
+          )
+        : ListView.builder(
+            itemCount: friends.length,
+            itemBuilder: (context, index) => ListTile(
+                  leading: Icon(Icons.person),
+                  title: Text(friends[index].username),
+                ));
   }
 }

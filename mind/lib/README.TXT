@@ -1,3 +1,6 @@
 THINGS TO ADD
 
--- set database storage settings to add profile pic image to storage
+-- set db security rules
+-- finish movie description page
+-- adjust search to find movies through api
+-- 

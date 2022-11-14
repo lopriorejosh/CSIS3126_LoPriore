@@ -61,7 +61,7 @@ class AuthProvider with ChangeNotifier {
         ),
       );
       //if signing up
-      addUsersToDatabase(newUser);
+      await addUsersToDatabase(newUser);
 
       _autoLogout();
       notifyListeners();
@@ -173,16 +173,5 @@ class AuthProvider with ChangeNotifier {
       "username": newUser.username,
     });
     await storage.putFile(newUser.profilePic!);
-  }
-
-  Future<String> getAccountInfo(String? UID) async {
-    final ref = FirebaseDatabase.instance.ref();
-    final snapshot = await ref.child('users/$_UID/username').get();
-    if (snapshot.exists) {
-      print(snapshot.value);
-      return snapshot.value.toString();
-    } else {
-      return 'Anonymous';
-    }
   }
 }

@@ -15,7 +15,7 @@ class MyDrawer extends StatelessWidget {
           child: Column(
             children: [
               Expanded(child: Image.asset('lib/Assets/launcher_icon.png')),
-              Text('Welcome' + accountInfo.username!)
+              Text('Welcome ' + accountInfo.username!)
             ],
           ),
         ),
@@ -37,9 +37,9 @@ class MyDrawer extends StatelessWidget {
         Divider(),
         ListTile(
           onTap: () {
-            Navigator.of(context).pushReplacementNamed('/settings');
+            Navigator.of(context).pushReplacementNamed('/account');
           },
-          title: Text('Settings'),
+          title: Text('Account/Settings'),
           leading: Icon(Icons.settings),
         ),
         Divider(),

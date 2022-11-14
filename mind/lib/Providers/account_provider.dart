@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mind/Models/user_model.dart';
 import 'package:provider/provider.dart';
@@ -13,8 +14,13 @@ class AccountProvider extends ChangeNotifier {
   final _db = FirebaseDatabase.instance.ref();
   final _storage = FirebaseStorage.instance;
 
-  User myAccount =
-      User(username: '', email: '', password: '', UID: '', profilePic: null);
+  User myAccount = User(
+      username: '',
+      email: '',
+      password: '',
+      UID: '',
+      profilePic: null,
+      profPicUrl: '');
 
   User get myAccountInfo => myAccount;
 
@@ -24,19 +30,29 @@ class AccountProvider extends ChangeNotifier {
   late StreamSubscription<DatabaseEvent> _accountStream;
   late StreamSubscription<DatabaseEvent> _friendsStream;
 
+  Future<void> getProfPic(BuildContext context) async {
+    var accountFinder = Provider.of<AuthProvider>(context, listen: false);
+
+    myAccount.profPicUrl = await _storage
+        .ref()
+        .child('/usersProfilePictures/${accountFinder.UID}.jpg')
+        .getDownloadURL();
+  }
+
   //set up account info stream when initialized
   void fetchAccountInfo(BuildContext context) {
     var accountFinder = Provider.of<AuthProvider>(context, listen: false);
+    myAccount.UID = accountFinder.UID;
+    getProfPic(context);
     _accountStream =
         _db.child('users/${accountFinder.UID}').onValue.listen((event) {
       final fetchedAccount = event.snapshot.value as Map<dynamic, dynamic>;
-
-      print(fetchedAccount.values);
-
-      //myAccount = User.fromRTDB(fetchedAccount.values as Map<dynamic, dynamic>);
+      //convert snapshot to user model
+      final convertedInfo = User.fromRTDB(fetchedAccount);
+      //set provider account to use everywhere
+      myAccount.username = convertedInfo.username;
+      myAccount.email = convertedInfo.email;
     });
-
-    print(myAccount.username);
   }
 
 //set up stream and update the friends list whenever new events come in
@@ -47,6 +63,9 @@ class AccountProvider extends ChangeNotifier {
         //listen to db stream
         _db.child('users/${account.UID}/friends').onValue.listen(
       (event) {
+        if (event.snapshot.value == null) {
+          return;
+        }
         //set as map to convert
         final allFriends = event.snapshot.value as Map<dynamic, dynamic>;
         //set list to values

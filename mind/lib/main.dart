@@ -13,6 +13,8 @@ import './Screens/movie_description_page.dart';
 import './Screens/SplashScreen.dart';
 import './Screens/friend_lookup_page.dart';
 import './Screens/settings_page.dart';
+import './Screens/account_page.dart';
+import './Screens/search_movie_page.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
@@ -90,6 +92,8 @@ class MyApp extends StatelessWidget {
                 AuthScreen.routeName: (context) => AuthScreen(),
                 FriendsLookupPage.routeName: (context) => FriendsLookupPage(),
                 SettingsPage.routeName: (context) => SettingsPage(),
+                AccountPage.routeName: (context) => AccountPage(),
+                SearchMoviePage.routeName: (context) => SearchMoviePage()
               },
             ));
   }

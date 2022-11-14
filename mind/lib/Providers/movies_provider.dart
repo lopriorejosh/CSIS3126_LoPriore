@@ -9,7 +9,7 @@ class MoviesProvider extends ChangeNotifier {
 
   List<Movie> get popularMovies => _popularMovies;
 
-  Future<void> FetchPopularMovies() async {
+  Future<void> fetchPopularMovies() async {
     var popularMoviesUrl = Uri.parse(ApiConstants.baseUrl +
         ApiConstants.popularMoviesEndpoint +
         ApiConstants.apiKey);

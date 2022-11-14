@@ -24,7 +24,9 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     //initial pull of data before build
-    Provider.of<MoviesProvider>(context, listen: false).FetchPopularMovies();
+    Provider.of<MoviesProvider>(context, listen: false).fetchPopularMovies();
+    Provider.of<AccountProvider>(context, listen: false)
+        .fetchAccountInfo(context);
     super.initState();
     pageController = PageController(initialPage: selectedIndex);
   }

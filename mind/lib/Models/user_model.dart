@@ -6,8 +6,15 @@ class User {
   String? password;
   String? UID;
   File? profilePic;
+  String? profPicUrl;
 
-  User({this.username, this.email, this.password, this.UID, this.profilePic});
+  User(
+      {this.username,
+      this.email,
+      this.password,
+      this.UID,
+      this.profilePic,
+      this.profPicUrl});
 
   //convert json data to friend model
   factory User.fromRTDB(Map<dynamic, dynamic> data) {
