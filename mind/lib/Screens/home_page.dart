@@ -24,7 +24,11 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     //initial pull of data before build
-    Provider.of<MoviesProvider>(context, listen: false).fetchPopularMovies();
+    Provider.of<MoviesProvider>(context, listen: false)
+        .fetchMovieList('popular');
+    Provider.of<MoviesProvider>(context, listen: false)
+        .fetchMovieList('topRated');
+
     Provider.of<AccountProvider>(context, listen: false)
         .fetchAccountInfo(context);
     super.initState();
@@ -34,6 +38,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     var popularMovies = Provider.of<MoviesProvider>(context).popularMovies;
+    var topRatedMovies = Provider.of<MoviesProvider>(context).topRatedMovies;
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -62,6 +67,16 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 RowOfMovies(popularMovies),
+                Divider(),
+                Container(
+                  padding: EdgeInsets.all(6),
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "Top Rated Films",
+                    style: Theme.of(context).textTheme.displayMedium,
+                  ),
+                ),
+                RowOfMovies(topRatedMovies),
               ]),
             ),
       bottomNavigationBar: WaterDropNavBar(

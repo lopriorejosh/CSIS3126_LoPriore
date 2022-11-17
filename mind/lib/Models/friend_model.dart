@@ -1,4 +1,4 @@
-import '../Models/movie_model.dart';
+import 'movie_model.dart';
 
 class Friend {
   final String UID;

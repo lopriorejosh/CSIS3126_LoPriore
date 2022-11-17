@@ -63,8 +63,10 @@ class MovieDescriptionPage extends StatelessWidget {
                 style: Theme.of(context).textTheme.labelSmall,
               ),
               onPressed: () {
-                //Provider.of<MoviesProvider>(context, listen: false)
-                //  .getMovieDetails(movieInfo);
+                final movie =
+                    Provider.of<MoviesProvider>(context, listen: false)
+                        .getMovieDetails(550);
+                print(movie);
               },
             ),
             const Divider(),

@@ -1,5 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mind/API/api_constants.dart';
+import 'package:provider/provider.dart';
+import 'package:mind/Providers/movies_provider.dart';
 
 import '../Screens/movie_description_page.dart';
 import '../Models/movie_model.dart';

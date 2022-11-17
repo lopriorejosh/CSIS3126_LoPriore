@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mind/Widgets/search_delegates.dart';
 import 'package:provider/provider.dart';
 
 import '../Providers/account_provider.dart';
@@ -50,7 +51,9 @@ class MyFriendsList extends StatelessWidget {
               Divider(),
               ElevatedButton(
                   onPressed: () {
-                    //go to add friend page
+                    //search for friend
+                    showSearch(
+                        context: context, delegate: FriendSearchDelegate());
                   },
                   child: Text("Add Friends",
                       textAlign: TextAlign.center,
