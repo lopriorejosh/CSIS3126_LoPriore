@@ -39,7 +39,7 @@ class MySearchDelegate extends SearchDelegate {
   List<Movie> matches = [];
 
   Future<void> searchMovie(String queryToSearch) async {
-    final url = Uri.parse(ApiConstants.searchMovieEndpoint + query);
+    final url = Uri.parse(ApiConstants.searchMovieEndpoint + 'Jack+Reacher');
     var response = await http.get(url);
     print(response.body);
     //make list of matches

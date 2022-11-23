@@ -39,26 +39,6 @@ class MoviesProvider extends ChangeNotifier {
     }
   }
 
-/*
-  Future<void> fetchTopRatedMovies() async {
-    var topMoviesUrl = Uri.parse(ApiConstants.baseUrl +
-        ApiConstants.topRatedMoviesEndpoint +
-        ApiConstants.apiKey);
-    try {
-      var response = await http.get(topMoviesUrl);
-      if (response.statusCode == 200) {
-        //convert json data and set _topRatedMovies
-        //log(response.body);
-        List<Movie> _fetchedMovies = convertFromList(response.body).results;
-        print(_fetchedMovies[0].title);
-        _topRatedMovies = _fetchedMovies;
-        notifyListeners();
-      }
-    } catch (error) {
-      print(error);
-    }
-  }
-*/
   Future<void> getMovieDetails(int id) async {
     var movieDets = Uri.parse('https://api.themoviedb.org/3/movie/${id}' +
         ApiConstants.apiKey +

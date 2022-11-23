@@ -8,7 +8,7 @@ class ApiConstants {
   static String originalImageEndpoint = '/original';
   static String getMovieDetailsEndpoint = "https://api.themoviedb.org/3/movie/";
   static String searchMovieEndpoint =
-      "https://api.themoviedb.org/3/search/movie?api_key=$apiKey&query="; // + name of movie to find(with + where spaces would be)
+      "https://api.themoviedb.org/3/search/movie?api_key={$apiKey}&query="; // + name of movie to find(with + where spaces would be)
 
 //firebase
   static String fireBaseAPIKey = "AIzaSyAHb9_0HtYGJmJs2KCTgkR4gEb4QXJYRuo";

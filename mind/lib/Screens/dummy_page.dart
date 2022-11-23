@@ -17,19 +17,7 @@ class DummyPage extends StatelessWidget {
       body: Center(
         child: ElevatedButton(
           child: Text('test'),
-          onPressed: () {
-            Navigator.pushReplacementNamed(context, '/MovieDescriptionPage',
-                arguments: Movie(
-                    title: 'title',
-                    imageUrl: '/fCayJrkfRaCRCTh8GqN30f8oyQF.jpg',
-                    video: false,
-                    genres: [],
-                    watchProviders: [],
-                    description: 'description',
-                    id: 0,
-                    reviews: [],
-                    runtime: 0));
-          },
+          onPressed: () {},
         ),
       ),
     );

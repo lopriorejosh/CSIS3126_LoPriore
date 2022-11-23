@@ -22,10 +22,17 @@ class _FriendsLookupPageState extends State<FriendsLookupPage> {
 
   @override
   Widget build(BuildContext context) {
+    var friends = Provider.of<AccountProvider>(context).friendsList;
+
     return Scaffold(
       appBar: MyAppBar(),
       drawer: MyDrawer(),
       body: MyFriendsList(),
+      floatingActionButton: friends.isEmpty
+          ? null
+          : FloatingActionButton(
+              onPressed: () {},
+            ),
     );
   }
 }

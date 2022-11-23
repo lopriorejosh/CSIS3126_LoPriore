@@ -1,19 +1,26 @@
+import 'dart:async';
+
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:mind/Models/friend_model.dart';
+import 'package:mind/Providers/account_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../Providers/movies_provider.dart';
 import '../Models/movie_model.dart';
 import '../API/api_constants.dart';
 import '../Screens/movie_description_page.dart';
+import '../Models/user_model.dart';
 
 class MovieSearchDelegate extends SearchDelegate {
   List<Movie> friendMatches = [];
 
   Future<void> searchMovie(String queryToSearch) async {
-    final url = Uri.parse(ApiConstants.searchMovieEndpoint + query);
+    final url = Uri.parse(
+        'https://api.themoviedb.org/3/search/movie?api_key=ffd47d62f4e4b8d58336acf31f7c2550&language=en-US&query=Jack%2BReacher&page=1&include_adult=false');
     var response = await http.get(url);
     print(response.body);
     //make list of friendMatches
@@ -121,10 +128,7 @@ class MovieSearchDelegate extends SearchDelegate {
 
 class FriendSearchDelegate extends SearchDelegate {
   List<Friend> friendMatches = [];
-
-  Future<void> searchFriend(String queryToSearch) async {
-    //make list of friendMatches
-  }
+  final ref = FirebaseDatabase.instance.ref('users');
 
   @override
   Widget? buildLeading(BuildContext context) => IconButton(
@@ -142,6 +146,7 @@ class FriendSearchDelegate extends SearchDelegate {
               close(context, null);
             } else {
               query = '';
+              friendMatches.clear();
             }
           },
           icon: Icon(Icons.clear)),
@@ -150,38 +155,50 @@ class FriendSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
+    final friendsProvider =
+        Provider.of<AccountProvider>(context, listen: false);
     //query the api db
-    searchFriend(query);
     //display list
-    return friendMatches.isEmpty
-        ? Center(
-            child: Text(
-              'No Friend Matches',
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.titleSmall,
-            ),
-          )
-        : ListView.builder(
-            itemCount: 5,
-            itemBuilder: (context, index) {
-              return ListTile(
-                title: Text(
-                  textAlign: TextAlign.center,
-                  friendMatches[index].username,
-                  style: Theme.of(context).textTheme.titleSmall,
-                ),
-                onTap: () {
-                  //add friend
-                },
-              );
+
+    return FutureBuilder(
+        future:
+            ref.orderByChild('username').equalTo(query).limitToFirst(10).once(),
+        builder: ((context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          }
+          if (snapshot.hasData && query.isNotEmpty) {
+            friendMatches.clear();
+
+            Map<dynamic, dynamic> values =
+                snapshot.data!.snapshot.value as Map<dynamic, dynamic>;
+            print(values);
+            values.forEach((key, value) {
+              Friend newFriend =
+                  Friend(UID: key, username: value['username'], status: false);
+              friendMatches.add(newFriend);
             });
+          }
+          return ListView.builder(
+              itemCount: friendMatches.length,
+              itemBuilder: ((context, index) {
+                return ListTile(
+                  title: Text(friendMatches[index].username),
+                  trailing: IconButton(
+                    icon: Icon(Icons.add),
+                    onPressed: () => friendsProvider.addFriend(
+                        friendMatches[index], context),
+                  ),
+                );
+              }));
+        }));
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
     return Center(
         child: Text(
-      'Search Results Will Display Here',
+      'Search Users By Username. Search Is Case Sensitive.',
       textAlign: TextAlign.center,
       style: Theme.of(context).textTheme.caption,
     ));
