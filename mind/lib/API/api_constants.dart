@@ -8,7 +8,7 @@ class ApiConstants {
   static String originalImageEndpoint = '/original';
   static String getMovieDetailsEndpoint = "https://api.themoviedb.org/3/movie/";
   static String searchMovieEndpoint =
-      "https://api.themoviedb.org/3/search/movie$apiKey}&query="; // + name of movie to find(with + where spaces would be)
+      "https://api.themoviedb.org/3/search/movie$apiKey&query="; // + name of movie to find(with + where spaces would be)
   static String getMovievideosEndpoint = "https://api.themoviedb.org/3/movie/";
   static String tailVideoEndpoint = "/videos$apiKey&language=en-US";
 

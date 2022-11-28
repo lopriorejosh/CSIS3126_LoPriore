@@ -79,10 +79,16 @@ class _MovieDescriptionPageState extends State<MovieDescriptionPage> {
                 style: Theme.of(context).textTheme.labelSmall,
               ),
               onPressed: () {
-                Provider.of<MoviesProvider>(context, listen: false)
-                    .getMovieDetails(movieInfo.id);
+                print(movieInfo.id);
                 //Provider.of<MoviesProvider>(context, listen: false)
-                //  .getVideo(movieInfo.id);
+                //  .getMovieDetails(movieInfo.id);
+                var trailerInfo =
+                    Provider.of<MoviesProvider>(context, listen: false)
+                        .getVideo(movieInfo.id);
+                Navigator.of(context).pushReplacementNamed(
+                  '/youtubePlayer',
+                  //arguments: push trailer id here
+                );
               },
             ),
             const Divider(),

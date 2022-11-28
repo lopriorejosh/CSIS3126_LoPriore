@@ -28,7 +28,6 @@ class _HomePageState extends State<HomePage> {
         .fetchMovieList('popular');
     Provider.of<MoviesProvider>(context, listen: false)
         .fetchMovieList('topRated');
-
     Provider.of<AccountProvider>(context, listen: false)
         .fetchAccountInfo(context);
     super.initState();
@@ -45,7 +44,7 @@ class _HomePageState extends State<HomePage> {
       appBar: MyAppBar(true),
       drawer: MyDrawer(),
       //if loading movies or empty show loading spinner else show page
-      body: popularMovies == null || popularMovies.isEmpty
+      body: popularMovies.isEmpty
           ? const Center(
               child: CircularProgressIndicator(),
             )

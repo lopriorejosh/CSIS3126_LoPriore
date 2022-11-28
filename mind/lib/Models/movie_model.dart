@@ -8,22 +8,22 @@ class Movie {
   String title;
   String imageUrl;
   bool video;
-  List<Genre> genres;
-  List<WatchProviders> watchProviders;
+  List<Genre>? genres;
+  List<WatchProviders>? watchProviders;
   String description;
   int id;
-  List<Review> reviews;
-  double runtime;
+  List<Review>? reviews;
+  double? runtime;
   Movie(
       {required this.title,
       required this.imageUrl,
       required this.video,
-      required this.genres,
-      required this.watchProviders,
+      this.genres,
+      this.watchProviders,
       required this.description,
       required this.id,
-      required this.reviews,
-      required this.runtime});
+      this.reviews,
+      this.runtime});
 
   /* factory Movie.fromJson(Map<String, dynamic> json) {
     final movie = Movie(
@@ -60,17 +60,18 @@ class Movie {
 
 //convert json from api where response returns data inside the results list -- see api docs
   factory Movie.convertJsonFromList(Map<String, dynamic> json) {
-    final movie = Movie(
+    final _movie = Movie(
       title: json['title'],
-      imageUrl: json['backdrop_path'],
+      imageUrl: json['backdrop_path'] == null
+          ? json['poster_path']
+          : json['backdrop_path'],
       video: json['video'] as bool,
-      genres: [], //not in api call
       watchProviders: [], //not in api call
       description: json['overview'],
       id: json['id'],
       reviews: [], //not in api call
       runtime: 0, //not in api call
     );
-    return movie;
+    return _movie;
   }
 }

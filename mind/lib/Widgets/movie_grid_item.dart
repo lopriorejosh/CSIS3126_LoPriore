@@ -1,8 +1,5 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mind/API/api_constants.dart';
-import 'package:provider/provider.dart';
-import 'package:mind/Providers/movies_provider.dart';
 
 import '../Screens/movie_description_page.dart';
 import '../Models/movie_model.dart';
@@ -34,11 +31,14 @@ class MovieGridItem extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Image.network(
-                ApiConstants.imageEndpoint +
-                    ApiConstants.originalImageEndpoint +
-                    movieItem.imageUrl,
-                fit: BoxFit.fill,
+              Container(
+                height: MediaQuery.of(context).size.height * .125,
+                child: Image.network(
+                  ApiConstants.imageEndpoint +
+                      ApiConstants.originalImageEndpoint +
+                      movieItem.imageUrl,
+                  fit: BoxFit.fill,
+                ),
               ),
               Divider(),
               RichText(

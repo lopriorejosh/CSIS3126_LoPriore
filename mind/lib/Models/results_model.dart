@@ -11,7 +11,9 @@ class Results {
     required this.results,
   });
 
-  factory Results.fromJson(Map<String, dynamic> json) => Results(
-      results: List<Movie>.from(
-          json['results'].map((movie) => Movie.convertJsonFromList(movie))));
+  factory Results.fromJson(Map<String, dynamic> json) {
+    return Results(
+        results: List<Movie>.from(
+            json['results'].map((movie) => Movie.convertJsonFromList(movie))));
+  }
 }

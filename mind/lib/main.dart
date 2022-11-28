@@ -16,6 +16,7 @@ import './Screens/settings_page.dart';
 import './Screens/account_page.dart';
 import './Screens/search_movie_page.dart';
 import './Screens/dummy_page.dart';
+import './Screens/movie_trailer_page.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
@@ -101,6 +102,7 @@ class MyApp extends StatelessWidget {
                 SettingsPage.routeName: (context) => SettingsPage(),
                 AccountPage.routeName: (context) => AccountPage(),
                 SearchMoviePage.routeName: (context) => SearchMoviePage(),
+                MovieTrailerPage.routeName: (context) => MovieTrailerPage(),
                 DummyPage.routeName: (context) => DummyPage(),
               },
             ));
