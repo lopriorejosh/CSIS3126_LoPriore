@@ -44,6 +44,8 @@ class MyApp extends StatelessWidget {
                 brightness: Brightness.dark,
                 primarySwatch: Colors.green,
                 bottomAppBarColor: Colors.green,
+                floatingActionButtonTheme: FloatingActionButtonThemeData(
+                    backgroundColor: Colors.green),
                 textTheme: TextTheme(
                   titleLarge: TextStyle(
                       fontFamily: GoogleFonts.yesevaOne().fontFamily,
@@ -71,6 +73,10 @@ class MyApp extends StatelessWidget {
                   labelMedium: TextStyle(
                     fontSize: 20,
                     fontFamily: GoogleFonts.yesevaOne().fontFamily,
+                  ),
+                  headlineMedium: TextStyle(
+                    fontFamily: GoogleFonts.yesevaOne().fontFamily,
+                    fontSize: 25,
                   ),
                 ),
                 appBarTheme: const AppBarTheme(color: Colors.transparent),

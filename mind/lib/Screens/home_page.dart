@@ -42,7 +42,7 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: MyAppBar(),
+      appBar: MyAppBar(true),
       drawer: MyDrawer(),
       //if loading movies or empty show loading spinner else show page
       body: popularMovies == null || popularMovies.isEmpty

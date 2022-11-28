@@ -24,8 +24,8 @@ class AccountProvider extends ChangeNotifier {
 
   User get myAccountInfo => myAccount;
 
-  List<Friend> _friends = [];
-  List<Friend> get friendsList => _friends;
+  List<User> _friends = [];
+  List<User> get friendsList => _friends;
 
   late StreamSubscription<DatabaseEvent> _accountStream;
   late StreamSubscription<DatabaseEvent> _friendsStream;
@@ -48,7 +48,7 @@ class AccountProvider extends ChangeNotifier {
         _db.child('users/${accountFinder.UID}').onValue.listen((event) {
       final fetchedAccount = event.snapshot.value as Map<dynamic, dynamic>;
       //convert snapshot to user model
-      final convertedInfo = User.fromRTDB(fetchedAccount);
+      final convertedInfo = User.fromJsonToUser(fetchedAccount);
       //set provider account to use everywhere
       myAccount.username = convertedInfo.username;
       myAccount.email = convertedInfo.email;
@@ -72,7 +72,7 @@ class AccountProvider extends ChangeNotifier {
         _friends = allFriends.values
             .map(
               (friendAsJson) =>
-                  Friend.fromRTDB(Map<String, dynamic>.from(friendAsJson)),
+                  User.fromJsonToUser(Map<String, dynamic>.from(friendAsJson)),
             )
             .toList();
         notifyListeners();
@@ -84,7 +84,7 @@ class AccountProvider extends ChangeNotifier {
     );
   }
 
-  Future<void> addFriend(Friend friendToAdd, BuildContext context) async {
+  Future<void> addFriend(User friendToAdd, BuildContext context) async {
     var account = Provider.of<AuthProvider>(context, listen: false);
     DatabaseReference friendsListRef =
         FirebaseDatabase.instance.ref('users/${account.UID}/friends');
@@ -93,7 +93,8 @@ class AccountProvider extends ChangeNotifier {
       await newFriend.set({
         'UID': friendToAdd.UID,
         'username': friendToAdd.username,
-        'Status': friendToAdd.status
+        'fname': friendToAdd.fname,
+        'lname': friendToAdd.lname,
       });
     } catch (error) {
       print(error);

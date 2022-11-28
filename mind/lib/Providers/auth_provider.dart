@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -171,6 +172,8 @@ class AuthProvider with ChangeNotifier {
     await ref.set({
       "email": newUser.email,
       "username": newUser.username,
+      'fname': newUser.fname,
+      'lname': newUser.lname
     });
     await storage.putFile(newUser.profilePic!);
   }

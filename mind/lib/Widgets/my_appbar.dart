@@ -9,6 +9,10 @@ import '../Models/movie_model.dart';
 import '../Screens/movie_description_page.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
+  bool haveSearch;
+
+  MyAppBar(this.haveSearch);
+
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<AccountProvider>(context, listen: false);
@@ -20,15 +24,18 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           style: Theme.of(context).textTheme.titleLarge,
         ),
         centerTitle: true,
-        actions: [
-          IconButton(
-              onPressed: () {
-                //navigate to search page
-                //Navigator.of(context).pushNamed('/searchMovie');
-                showSearch(context: context, delegate: MySearchDelegate());
-              },
-              icon: const Icon(Icons.search)),
-        ]);
+        actions: !haveSearch
+            ? null
+            : [
+                IconButton(
+                    onPressed: () {
+                      //navigate to search page
+                      //Navigator.of(context).pushNamed('/searchMovie');
+                      showSearch(
+                          context: context, delegate: MySearchDelegate());
+                    },
+                    icon: const Icon(Icons.search)),
+              ]);
   }
 
   @override

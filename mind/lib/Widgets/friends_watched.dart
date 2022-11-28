@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mind/Models/user_model.dart';
 import 'package:mind/Providers/account_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -8,7 +9,7 @@ import '../Providers/movies_provider.dart';
 
 class FriendCard extends StatelessWidget {
   Movie lastMovieWatched;
-  Friend friend;
+  User friend;
 
   FriendCard(this.friend, this.lastMovieWatched);
 
@@ -32,7 +33,7 @@ class FriendCard extends StatelessWidget {
                   Expanded(
                     child: FittedBox(
                       child: Text(
-                        friend.username,
+                        friend.username.toString(),
                         style: Theme.of(context).textTheme.labelSmall,
                       ),
                     ),

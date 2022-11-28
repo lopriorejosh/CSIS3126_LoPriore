@@ -49,7 +49,21 @@ class MoviesProvider extends ChangeNotifier {
         final fetchedMovie = Movie.detsFromJson(
             json.decode(response.body) as Map<String, dynamic>);
         _singleMovieSelected = fetchedMovie;
+        print(_singleMovieSelected.genres[0].name);
+        print(_singleMovieSelected.watchProviders[0].providerName);
       }
+    } catch (error) {
+      print(error);
+      throw error;
+    }
+  }
+
+  Future<void> getVideo(int id) async {
+    var movieVideoEndpoint = Uri.parse(
+        'https://api.themoviedb.org/3/movie/$id/videos?api_key=ffd47d62f4e4b8d58336acf31f7c2550&language=en-US');
+    try {
+      final response = await http.get(movieVideoEndpoint);
+      print(response.body);
     } catch (error) {
       print(error);
     }

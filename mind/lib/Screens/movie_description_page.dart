@@ -7,8 +7,24 @@ import '../Widgets/my_appbar.dart';
 import '../Models/movie_model.dart';
 import '../API/api_constants.dart';
 
-class MovieDescriptionPage extends StatelessWidget {
+class MovieDescriptionPage extends StatefulWidget {
   static const routeName = '/MovieDescriptionPage';
+
+  @override
+  State<MovieDescriptionPage> createState() => _MovieDescriptionPageState();
+}
+
+class _MovieDescriptionPageState extends State<MovieDescriptionPage> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +32,7 @@ class MovieDescriptionPage extends StatelessWidget {
 
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: MyAppBar(),
+      appBar: MyAppBar(true),
       body: SizedBox(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
@@ -63,10 +79,10 @@ class MovieDescriptionPage extends StatelessWidget {
                 style: Theme.of(context).textTheme.labelSmall,
               ),
               onPressed: () {
-                final movie =
-                    Provider.of<MoviesProvider>(context, listen: false)
-                        .getMovieDetails(550);
-                print(movie);
+                Provider.of<MoviesProvider>(context, listen: false)
+                    .getMovieDetails(movieInfo.id);
+                //Provider.of<MoviesProvider>(context, listen: false)
+                //  .getVideo(movieInfo.id);
               },
             ),
             const Divider(),

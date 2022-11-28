@@ -1,22 +1,18 @@
 import 'dart:async';
 
 import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_database/ui/firebase_animated_list.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:mind/Models/friend_model.dart';
 import 'package:mind/Providers/account_provider.dart';
 import 'package:provider/provider.dart';
 
+import '../Models/user_model.dart';
 import '../Providers/movies_provider.dart';
 import '../Models/movie_model.dart';
-import '../API/api_constants.dart';
 import '../Screens/movie_description_page.dart';
-import '../Models/user_model.dart';
 
 class MovieSearchDelegate extends SearchDelegate {
-  List<Movie> friendMatches = [];
+  List<Movie> movieMatches = [];
 
   Future<void> searchMovie(String queryToSearch) async {
     final url = Uri.parse(
@@ -53,7 +49,7 @@ class MovieSearchDelegate extends SearchDelegate {
     //query the api db
     searchMovie(query);
     //display list
-    return friendMatches.isEmpty
+    return movieMatches.isEmpty
         ? Center(
             child: Text(
               'No Matches',
@@ -67,21 +63,21 @@ class MovieSearchDelegate extends SearchDelegate {
               return ListTile(
                 title: Text(
                   textAlign: TextAlign.center,
-                  friendMatches[index].title,
+                  movieMatches[index].title,
                   style: Theme.of(context).textTheme.titleSmall,
                 ),
                 onTap: (() => Navigator.of(context).pushNamed(
                       MovieDescriptionPage.routeName,
                       arguments: Movie(
-                          title: friendMatches[index].title,
-                          description: friendMatches[index].description,
-                          id: friendMatches[index].id,
-                          imageUrl: friendMatches[index].imageUrl,
-                          genres: friendMatches[index].genres,
-                          video: friendMatches[index].video,
-                          watchProviders: friendMatches[index].watchProviders,
-                          reviews: friendMatches[index].reviews,
-                          runtime: friendMatches[index].runtime),
+                          title: movieMatches[index].title,
+                          description: movieMatches[index].description,
+                          id: movieMatches[index].id,
+                          imageUrl: movieMatches[index].imageUrl,
+                          genres: movieMatches[index].genres,
+                          video: movieMatches[index].video,
+                          watchProviders: movieMatches[index].watchProviders,
+                          reviews: movieMatches[index].reviews,
+                          runtime: movieMatches[index].runtime),
                     )),
               );
             });
@@ -127,7 +123,7 @@ class MovieSearchDelegate extends SearchDelegate {
 }
 
 class FriendSearchDelegate extends SearchDelegate {
-  List<Friend> friendMatches = [];
+  List<User> friendMatches = [];
   final ref = FirebaseDatabase.instance.ref('users');
 
   @override
@@ -167,15 +163,27 @@ class FriendSearchDelegate extends SearchDelegate {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
           }
-          if (snapshot.hasData && query.isNotEmpty) {
+          if (!snapshot.hasData || snapshot.data!.snapshot.value == null) {
+            return Center(
+              child:
+                  Text('No Users Found. Try Again. Search is Case Sensitive.'),
+            );
+          }
+          if (snapshot.hasData &&
+              query.isNotEmpty &&
+              snapshot.data!.snapshot.value != null) {
             friendMatches.clear();
 
             Map<dynamic, dynamic> values =
                 snapshot.data!.snapshot.value as Map<dynamic, dynamic>;
             print(values);
             values.forEach((key, value) {
-              Friend newFriend =
-                  Friend(UID: key, username: value['username'], status: false);
+              User newFriend = User(
+                UID: key,
+                username: value['username'],
+                fname: value['fname'],
+                lname: value['lname'],
+              );
               friendMatches.add(newFriend);
             });
           }
@@ -183,7 +191,7 @@ class FriendSearchDelegate extends SearchDelegate {
               itemCount: friendMatches.length,
               itemBuilder: ((context, index) {
                 return ListTile(
-                  title: Text(friendMatches[index].username),
+                  title: Text(friendMatches[index].username.toString()),
                   trailing: IconButton(
                     icon: Icon(Icons.add),
                     onPressed: () => friendsProvider.addFriend(

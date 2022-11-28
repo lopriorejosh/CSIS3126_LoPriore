@@ -12,7 +12,7 @@ class DummyPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(),
+      appBar: MyAppBar(true),
       drawer: MyDrawer(),
       body: Center(
         child: ElevatedButton(

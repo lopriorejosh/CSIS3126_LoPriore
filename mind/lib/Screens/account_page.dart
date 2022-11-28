@@ -18,7 +18,7 @@ class _AccountPageState extends State<AccountPage> {
     final accountInfo =
         Provider.of<AccountProvider>(context, listen: false).myAccount;
     return Scaffold(
-      appBar: MyAppBar(),
+      appBar: MyAppBar(false),
       drawer: MyDrawer(),
       body: Center(
         child: Column(

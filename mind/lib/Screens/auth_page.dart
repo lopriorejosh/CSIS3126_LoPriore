@@ -73,9 +73,17 @@ class _AuthCardState extends State<AuthCard> {
     'email': '',
     'password': '',
     'username': '',
+    'lname': '',
+    'fname': ''
   };
-  User newUser =
-      User(username: '', email: '', password: '', UID: '', profilePic: null);
+  User newUser = User(
+      username: '',
+      email: '',
+      password: '',
+      fname: '',
+      lname: '',
+      UID: '',
+      profilePic: null);
 
   var _isLoading = false;
   bool _signedIn = false;
@@ -132,14 +140,10 @@ class _AuthCardState extends State<AuthCard> {
     try {
       if (_authMode == AuthMode.Login) {
         // Log user in
-        await Provider.of<AuthProvider>(context, listen: false).signIn(
-            //_authData['email'], _authData['password']
-            newUser);
+        await Provider.of<AuthProvider>(context, listen: false).signIn(newUser);
       } else {
         // Sign user up
-        await Provider.of<AuthProvider>(context, listen: false).signup(
-            //_authData['email'], _authData['username'], _authData['password']
-            newUser);
+        await Provider.of<AuthProvider>(context, listen: false).signup(newUser);
       }
       setState(() {
         _isLoading = false;
@@ -217,10 +221,43 @@ class _AuthCardState extends State<AuthCard> {
                     return null;
                   },
                   onSaved: (value) {
-                    //_authData['email'] = value!;
                     newUser.email = value!;
                   },
                 ),
+                _authMode == AuthMode.Login
+                    ? Container()
+                    : TextFormField(
+                        decoration:
+                            const InputDecoration(labelText: 'First Name'),
+                        keyboardType: TextInputType.name,
+                        validator: (value) {
+                          //increase validation not fully accurate
+                          if (value!.isEmpty || value.length <= 1) {
+                            return 'Name Invalid!';
+                          }
+                          return null;
+                        },
+                        onSaved: (value) {
+                          newUser.fname = value!;
+                        },
+                      ),
+                _authMode == AuthMode.Login
+                    ? Container()
+                    : TextFormField(
+                        decoration:
+                            const InputDecoration(labelText: 'Last Name'),
+                        keyboardType: TextInputType.name,
+                        validator: (value) {
+                          //increase validation not fully accurate
+                          if (value!.isEmpty || value.length <= 1) {
+                            return 'Last Name Invalid!';
+                          }
+                          return null;
+                        },
+                        onSaved: (value) {
+                          newUser.lname = value!;
+                        },
+                      ),
                 _authMode == AuthMode.Login
                     ? Container()
                     : TextFormField(
@@ -239,6 +276,7 @@ class _AuthCardState extends State<AuthCard> {
                           newUser.username = value!;
                         },
                       ),
+
                 TextFormField(
                   decoration: const InputDecoration(labelText: 'Password'),
                   obscureText: true,
