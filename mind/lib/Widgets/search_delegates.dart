@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import 'package:mind/Providers/account_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../Models/user_model.dart';
+import '../Models/results_model.dart';
 import '../Providers/movies_provider.dart';
 import '../Models/movie_model.dart';
 import '../Screens/movie_description_page.dart';
@@ -14,12 +16,23 @@ import '../Screens/movie_description_page.dart';
 class MovieSearchDelegate extends SearchDelegate {
   List<Movie> movieMatches = [];
 
-  Future<void> searchMovie(String queryToSearch) async {
+  Future<List<Movie>> searchMovie(String queryToSearch) async {
     final url = Uri.parse(
-        'https://api.themoviedb.org/3/search/movie?api_key=ffd47d62f4e4b8d58336acf31f7c2550&language=en-US&query=Jack%2BReacher&page=1&include_adult=false');
-    var response = await http.get(url);
-    print(response.body);
-    //make list of friendMatches
+        'https://api.themoviedb.org/3/search/movie?api_key=ffd47d62f4e4b8d58336acf31f7c2550&language=en-US&query=${query}');
+    try {
+      var response = await http.get(url);
+      if (response.statusCode == 200) {
+        final _json = json.decode(response.body);
+        //log(response.body);
+        return List<Movie>.from(
+            _json['results'].map((movie) => Movie.fromJson(movie)));
+        //convertFromList(response.body).results;
+        //movieMatches = _fetchedMovies;
+      }
+    } catch (error) {
+      print(error);
+    }
+    return [];
   }
 
   @override
@@ -38,6 +51,7 @@ class MovieSearchDelegate extends SearchDelegate {
               close(context, null);
             } else {
               query = '';
+              movieMatches.clear();
             }
           },
           icon: Icon(Icons.clear)),
@@ -46,10 +60,11 @@ class MovieSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
+    //movieMatches.clear();
     //query the api db
-    searchMovie(query);
+    //searchMovie(query);
     //display list
-    return movieMatches.isEmpty
+    return /*movieMatches.isEmpty
         ? Center(
             child: Text(
               'No Matches',
@@ -57,8 +72,9 @@ class MovieSearchDelegate extends SearchDelegate {
               style: Theme.of(context).textTheme.titleSmall,
             ),
           )
-        : ListView.builder(
-            itemCount: 5,
+        :*/
+        /*ListView.builder(
+            itemCount: movieMatches.length,
             itemBuilder: (context, index) {
               return ListTile(
                 title: Text(
@@ -80,6 +96,50 @@ class MovieSearchDelegate extends SearchDelegate {
                           runtime: movieMatches[index].runtime),
                     )),
               );
+            });*/
+        FutureBuilder(
+            future: searchMovie(query),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(child: CircularProgressIndicator());
+              } else {
+                return ListView.builder(
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        title: Text(
+                          textAlign: TextAlign.center,
+                          snapshot.data![index].title,
+                          style: Theme.of(context).textTheme.titleSmall,
+                        ),
+                        onTap: (() => Navigator.of(context).pushNamed(
+                            MovieDescriptionPage.routeName,
+                            arguments: Movie(
+                                adult: snapshot.data![index].adult,
+                                backdrop_path:
+                                    snapshot.data![index].backdrop_path,
+                                budget: snapshot.data![index].budget,
+                                genres: snapshot.data![index].genres,
+                                id: snapshot.data![index].id,
+                                original_language:
+                                    snapshot.data![index].original_language,
+                                original_title:
+                                    snapshot.data![index].original_title,
+                                overview: snapshot.data![index].overview,
+                                popularity: snapshot.data![index].popularity,
+                                poster_path: snapshot.data![index].poster_path,
+                                release_date:
+                                    snapshot.data![index].release_date,
+                                revenue: snapshot.data![index].revenue,
+                                runtime: snapshot.data![index].runtime,
+                                tagline: snapshot.data![index].tagline,
+                                title: snapshot.data![index].title,
+                                video: snapshot.data![index].video,
+                                watchProviders:
+                                    snapshot.data![index].watchProviders))),
+                      );
+                    });
+              }
             });
   }
 
@@ -103,19 +163,26 @@ class MovieSearchDelegate extends SearchDelegate {
                 style: Theme.of(context).textTheme.titleSmall,
               ),
               onTap: (() => Navigator.of(context).pushNamed(
-                    MovieDescriptionPage.routeName,
-                    arguments: Movie(
-                      title: suggestionList[index].title,
-                      description: suggestionList[index].description,
-                      id: suggestionList[index].id,
-                      imageUrl: suggestionList[index].imageUrl,
+                  MovieDescriptionPage.routeName,
+                  arguments: Movie(
+                      adult: suggestionList[index].adult,
+                      backdrop_path: suggestionList[index].backdrop_path,
+                      budget: suggestionList[index].budget,
                       genres: suggestionList[index].genres,
-                      watchProviders: suggestionList[index].watchProviders,
-                      reviews: suggestionList[index].reviews,
+                      id: suggestionList[index].id,
+                      original_language:
+                          suggestionList[index].original_language,
+                      original_title: suggestionList[index].original_title,
+                      overview: suggestionList[index].overview,
+                      popularity: suggestionList[index].popularity,
+                      poster_path: suggestionList[index].poster_path,
+                      release_date: suggestionList[index].release_date,
+                      revenue: suggestionList[index].revenue,
                       runtime: suggestionList[index].runtime,
+                      tagline: suggestionList[index].tagline,
+                      title: suggestionList[index].title,
                       video: suggestionList[index].video,
-                    ),
-                  )),
+                      watchProviders: suggestionList[index].watchProviders))),
             );
           });
     }

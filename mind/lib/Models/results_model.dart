@@ -1,4 +1,4 @@
-import 'dart:convert';
+/*import 'dart:convert';
 
 import 'movie_model.dart';
 
@@ -14,6 +14,7 @@ class Results {
   factory Results.fromJson(Map<String, dynamic> json) {
     return Results(
         results: List<Movie>.from(
-            json['results'].map((movie) => Movie.convertJsonFromList(movie))));
+            json['results'].map((movie) => Movie.fromJson(movie))));
   }
 }
+*/

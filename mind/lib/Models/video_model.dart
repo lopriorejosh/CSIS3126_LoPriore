@@ -1,9 +1,7 @@
 class Video {
-  bool official;
-  String videoId;
+  String key;
 
-  Video({required this.official, required this.videoId});
+  Video({required this.key});
 
-  factory Video.fromVideoJson(Map<String, dynamic> json) =>
-      Video(official: json['official'], videoId: json['id']);
+  factory Video.fromJson(Map<String, dynamic> json) => Video(key: json['key']);
 }

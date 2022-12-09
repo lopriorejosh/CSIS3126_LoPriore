@@ -17,7 +17,10 @@ class DummyPage extends StatelessWidget {
       body: Center(
         child: ElevatedButton(
           child: Text('test'),
-          onPressed: () {},
+          onPressed: () {
+            Provider.of<MoviesProvider>(context, listen: false)
+                .getVideo(436270);
+          },
         ),
       ),
     );

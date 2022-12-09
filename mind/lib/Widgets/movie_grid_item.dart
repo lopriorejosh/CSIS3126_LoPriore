@@ -16,18 +16,25 @@ class MovieGridItem extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: InkWell(
           onTap: () => Navigator.of(context).pushNamed(
-                MovieDescriptionPage.routeName,
-                arguments: Movie(
-                    title: movieItem.title,
-                    description: movieItem.description,
-                    id: movieItem.id,
-                    imageUrl: movieItem.imageUrl,
-                    genres: movieItem.genres,
-                    video: movieItem.video,
-                    reviews: movieItem.reviews,
-                    watchProviders: movieItem.watchProviders,
-                    runtime: movieItem.runtime),
-              ),
+              MovieDescriptionPage.routeName,
+              arguments: Movie(
+                  adult: movieItem.adult,
+                  backdrop_path: movieItem.backdrop_path,
+                  budget: movieItem.budget,
+                  genres: movieItem.genres,
+                  id: movieItem.id,
+                  original_language: movieItem.original_language,
+                  original_title: movieItem.original_title,
+                  overview: movieItem.overview,
+                  popularity: movieItem.popularity,
+                  poster_path: movieItem.poster_path,
+                  release_date: movieItem.release_date,
+                  revenue: movieItem.revenue,
+                  runtime: movieItem.runtime,
+                  tagline: movieItem.tagline,
+                  title: movieItem.title,
+                  video: movieItem.adult,
+                  watchProviders: movieItem.watchProviders)),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -36,7 +43,7 @@ class MovieGridItem extends StatelessWidget {
                 child: Image.network(
                   ApiConstants.imageEndpoint +
                       ApiConstants.originalImageEndpoint +
-                      movieItem.imageUrl,
+                      movieItem.backdrop_path.toString(),
                   fit: BoxFit.fill,
                 ),
               ),

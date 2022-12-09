@@ -6,7 +6,7 @@ import 'package:firebase_core/firebase_core.dart';
 
 import './Providers/movies_provider.dart';
 import './Providers/auth_provider.dart';
-import 'Providers/account_provider.dart';
+import './Providers/account_provider.dart';
 import './Screens/auth_page.dart';
 import './Screens/home_page.dart';
 import './Screens/movie_description_page.dart';
@@ -14,9 +14,10 @@ import './Screens/SplashScreen.dart';
 import './Screens/friend_lookup_page.dart';
 import './Screens/settings_page.dart';
 import './Screens/account_page.dart';
-import './Screens/search_movie_page.dart';
+import './Screens/decide_movie_page.dart';
 import './Screens/dummy_page.dart';
 import './Screens/movie_trailer_page.dart';
+import './Screens/connect_with_friends_page.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
@@ -101,8 +102,10 @@ class MyApp extends StatelessWidget {
                 FriendsLookupPage.routeName: (context) => FriendsLookupPage(),
                 SettingsPage.routeName: (context) => SettingsPage(),
                 AccountPage.routeName: (context) => AccountPage(),
-                SearchMoviePage.routeName: (context) => SearchMoviePage(),
+                DecideMoviePage.routeName: (context) => DecideMoviePage(),
                 MovieTrailerPage.routeName: (context) => MovieTrailerPage(),
+                ConnectWithFriendsPage.routeName: (context) =>
+                    ConnectWithFriendsPage(),
                 DummyPage.routeName: (context) => DummyPage(),
               },
             ));

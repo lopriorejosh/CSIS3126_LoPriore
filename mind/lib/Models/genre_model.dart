@@ -1,23 +1,18 @@
-//import 'package:json_annotation/json_annotation.dart';
-
-//part 'genre_model.g.dart';
-
-//@JsonSerializable()
 class Genre {
-  String name;
-  int id;
-  Genre({
-    required this.id,
-    required this.name,
-  });
+  List<Genre>? genres;
+  String? name;
+  int? id;
 
-  factory Genre.fromJson(Map<String, dynamic> json) =>
-      Genre(id: json['id'], name: json['name']!);
+  Genre({this.id, this.name, this.genres});
 
-/*
-  //convert json data to genre class to add to movie
-  factory Genre.fromJson(Map<String, dynamic> json) => _$GenreFromJson(json);
+  factory Genre.fromJson(Map<String, dynamic> json) => Genre(
+      id: json['id'] ?? null,
+      name: json['name'] ?? null,
+      genres: json['genres'] ?? <Genre>[]);
 
-  Map<String, dynamic> toJson() => _$GenreToJson(this);
-*/
+  /*factory Genre.genresFromJson(Map<String, dynamic> json) {
+    return Genre(
+        genres: List<Genre>.from(
+            json['genres'].map((genre) => Genre.fromJson(genre))));
+  }*/
 }

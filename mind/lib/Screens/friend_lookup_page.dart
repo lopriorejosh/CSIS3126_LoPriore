@@ -102,7 +102,10 @@ class MyFriendsList extends StatelessWidget {
                                 trailing: IconButton(
                                   icon: Icon(
                                       Icons.connect_without_contact_rounded),
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.pushNamed(context, '/connect',
+                                        arguments: friends[index]);
+                                  },
                                 ),
                               ),
                             ),

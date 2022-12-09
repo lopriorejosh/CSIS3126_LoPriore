@@ -24,7 +24,7 @@ class TopMovie extends StatelessWidget {
         child: Image.network(
           ApiConstants.imageEndpoint +
               ApiConstants.originalImageEndpoint +
-              topMovie.imageUrl,
+              topMovie.backdrop_path.toString(),
           fit: BoxFit.fitHeight,
           height: MediaQuery.of(context).size.height * .6,
           width: MediaQuery.of(context).size.width,
@@ -49,20 +49,25 @@ class TopMovie extends StatelessWidget {
         bottom: 10,
         child: IconButton(
           onPressed: () {
-            Navigator.of(context).pushNamed(
-              MovieDescriptionPage.routeName,
-              arguments: Movie(
-                title: topMovie.title,
-                description: topMovie.description,
-                id: topMovie.id,
-                imageUrl: topMovie.imageUrl,
-                genres: topMovie.genres,
-                watchProviders: topMovie.watchProviders,
-                reviews: topMovie.reviews,
-                runtime: topMovie.runtime,
-                video: topMovie.video,
-              ),
-            );
+            Navigator.of(context).pushNamed(MovieDescriptionPage.routeName,
+                arguments: Movie(
+                    adult: topMovie.adult,
+                    backdrop_path: topMovie.backdrop_path,
+                    budget: topMovie.budget,
+                    genres: topMovie.genres,
+                    id: topMovie.id,
+                    original_language: topMovie.original_language,
+                    original_title: topMovie.original_title,
+                    overview: topMovie.overview,
+                    popularity: topMovie.popularity,
+                    poster_path: topMovie.poster_path,
+                    release_date: topMovie.release_date,
+                    revenue: topMovie.revenue,
+                    runtime: topMovie.runtime,
+                    tagline: topMovie.tagline,
+                    title: topMovie.title,
+                    video: topMovie.video,
+                    watchProviders: topMovie.watchProviders));
           },
           icon: const Icon(
             Icons.arrow_forward,

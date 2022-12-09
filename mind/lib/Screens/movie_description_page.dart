@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:expandable_text/expandable_text.dart';
+import 'package:mind/Models/video_model.dart';
 import 'package:provider/provider.dart';
 
 import '../Providers/movies_provider.dart';
@@ -14,18 +15,9 @@ class MovieDescriptionPage extends StatefulWidget {
   State<MovieDescriptionPage> createState() => _MovieDescriptionPageState();
 }
 
+//TODO: CREATE STATEFUL WIDGETS TO DISPLAY GENRES AND WATCH PROVIDERS. STATEFUL TO CALL SETSTATE WITH API CALL
+
 class _MovieDescriptionPageState extends State<MovieDescriptionPage> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
-    super.didChangeDependencies();
-  }
-
   @override
   Widget build(BuildContext context) {
     var movieInfo = ModalRoute.of(context)!.settings.arguments as Movie;
@@ -54,7 +46,7 @@ class _MovieDescriptionPageState extends State<MovieDescriptionPage> {
                   child: Image.network(
                     ApiConstants.imageEndpoint +
                         ApiConstants.originalImageEndpoint +
-                        movieInfo.imageUrl,
+                        movieInfo.poster_path.toString(),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -79,23 +71,15 @@ class _MovieDescriptionPageState extends State<MovieDescriptionPage> {
                 style: Theme.of(context).textTheme.labelSmall,
               ),
               onPressed: () {
-                print(movieInfo.id);
-                //Provider.of<MoviesProvider>(context, listen: false)
-                //  .getMovieDetails(movieInfo.id);
-                var trailerInfo =
-                    Provider.of<MoviesProvider>(context, listen: false)
-                        .getVideo(movieInfo.id);
-                Navigator.of(context).pushReplacementNamed(
-                  '/youtubePlayer',
-                  //arguments: push trailer id here
-                );
+                Navigator.of(context)
+                    .pushNamed('/youtubePlayer', arguments: movieInfo.id);
               },
             ),
             const Divider(),
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: ExpandableText(
-                movieInfo.description,
+                movieInfo.overview.toString(),
                 expandText: 'Show More',
                 collapseText: 'Show Less',
                 maxLines: 2,
@@ -111,8 +95,27 @@ class _MovieDescriptionPageState extends State<MovieDescriptionPage> {
               ),
             ),
             //get genres here
-            Row(
-              children: [],
+            Expanded(
+              child: FutureBuilder(
+                future: Provider.of<MoviesProvider>(context)
+                    .getSingleMovieGenre(movieInfo.id),
+                builder: ((context, snapshot) => ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: snapshot.data?.length ?? 0,
+                    itemBuilder: ((context, index) {
+                      return SizedBox(
+                        height: MediaQuery.of(context).size.height * .3,
+                        width: MediaQuery.of(context).size.width * .3,
+                        child: Card(
+                            elevation: 8,
+                            color: Colors.green,
+                            child: Center(
+                                child: Text(
+                                    textAlign: TextAlign.center,
+                                    snapshot.data![index].name.toString()))),
+                      );
+                    }))),
+              ),
             ),
             Spacer(),
             //add where to watch
@@ -121,6 +124,33 @@ class _MovieDescriptionPageState extends State<MovieDescriptionPage> {
               child: Text(
                 'Available to Watch On: ',
                 style: Theme.of(context).textTheme.headlineSmall,
+              ),
+            ),
+            Expanded(
+              child: FutureBuilder(
+                future: Provider.of<MoviesProvider>(context)
+                    .getSingleMovieWP(movieInfo.id),
+                builder: ((context, snapshot) => snapshot.data?.length == 0
+                    ? Center(
+                        child: Text('No Streaming Options'),
+                      )
+                    : ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: snapshot.data?.length ?? 0,
+                        itemBuilder: ((context, index) {
+                          return SizedBox(
+                            height: MediaQuery.of(context).size.height * .2,
+                            width: MediaQuery.of(context).size.width * .2,
+                            child: Card(
+                                elevation: 8,
+                                color: Colors.green,
+                                child: Center(
+                                    child: Text(
+                                        textAlign: TextAlign.center,
+                                        snapshot.data![index].providerName
+                                            .toString()))),
+                          );
+                        }))),
               ),
             ),
           ],

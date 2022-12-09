@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class SearchMoviePage extends StatelessWidget {
-  static const routeName = '/searchMovie';
+class DecideMoviePage extends StatelessWidget {
+  static const routeName = '/decideMovie';
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,7 @@ class SearchMoviePage extends StatelessWidget {
         centerTitle: true,
       ),
       body: Center(
-        child: Text('Search page'),
+        child: Text('decide page'),
       ),
     );
   }
