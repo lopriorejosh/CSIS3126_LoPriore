@@ -8,7 +8,6 @@ import '../Providers/auth_provider.dart';
 import '../Models/http_exception.dart';
 import '../Screens/home_page.dart';
 import '../Widgets/image_selection.dart';
-import '../Widgets/image_selection.dart';
 import '../Models/user_model.dart';
 
 enum AuthMode { Signup, Login }

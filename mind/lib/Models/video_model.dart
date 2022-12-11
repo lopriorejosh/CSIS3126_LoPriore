@@ -3,5 +3,6 @@ class Video {
 
   Video({required this.key});
 
-  factory Video.fromJson(Map<String, dynamic> json) => Video(key: json['key']);
+  factory Video.fromJson(Map<String, dynamic> json) =>
+      Video(key: json['key'] ?? '');
 }

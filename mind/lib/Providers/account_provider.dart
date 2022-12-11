@@ -1,13 +1,12 @@
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:mind/Models/user_model.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
-import '../Models/friend_model.dart';
+import '../Models/user_model.dart';
+import '../Models/genre_model.dart';
 import '../Providers/auth_provider.dart';
 
 class AccountProvider extends ChangeNotifier {
@@ -27,8 +26,9 @@ class AccountProvider extends ChangeNotifier {
   List<User> _friends = [];
   List<User> get friendsList => _friends;
 
-  late StreamSubscription<DatabaseEvent> _accountStream;
+  //late StreamSubscription<DatabaseEvent> _accountStream;
   late StreamSubscription<DatabaseEvent> _friendsStream;
+  //late StreamSubscription<DatabaseEvent> _movieStream;
 
   Future<void> getProfPic(BuildContext context) async {
     var accountFinder = Provider.of<AuthProvider>(context, listen: false);
@@ -44,8 +44,7 @@ class AccountProvider extends ChangeNotifier {
     var accountFinder = Provider.of<AuthProvider>(context, listen: false);
     myAccount.UID = accountFinder.UID;
     getProfPic(context);
-    _accountStream =
-        _db.child('users/${accountFinder.UID}').onValue.listen((event) {
+    _db.child('users/${accountFinder.UID}').onValue.listen((event) {
       final fetchedAccount = event.snapshot.value as Map<dynamic, dynamic>;
       //convert snapshot to user model
       final convertedInfo = User.fromJsonToUser(fetchedAccount);
@@ -96,6 +95,19 @@ class AccountProvider extends ChangeNotifier {
         'fname': friendToAdd.fname,
         'lname': friendToAdd.lname,
       });
+    } catch (error) {
+      print(error);
+    }
+  }
+
+  Future<void> setGenresToSearch(
+      List<Genre> genresToSearch, BuildContext context) async {
+    var account = Provider.of<AuthProvider>(context, listen: false);
+    DatabaseReference _connectedWith =
+        FirebaseDatabase.instance.ref('users/${account.UID}/connectedWith');
+    DatabaseReference setGenres = _connectedWith.push();
+    try {
+      await setGenres.set({'genre': genresToSearch[0].name});
     } catch (error) {
       print(error);
     }

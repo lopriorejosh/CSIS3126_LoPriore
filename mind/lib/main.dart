@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mind/firebase_options.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -18,7 +17,7 @@ import './Screens/decide_movie_page.dart';
 import './Screens/dummy_page.dart';
 import './Screens/movie_trailer_page.dart';
 import './Screens/connect_with_friends_page.dart';
-import 'firebase_options.dart';
+import '../firebase_options.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -80,6 +79,14 @@ class MyApp extends StatelessWidget {
                     fontFamily: GoogleFonts.yesevaOne().fontFamily,
                     fontSize: 25,
                   ),
+                  headlineSmall: TextStyle(
+                      fontFamily: GoogleFonts.yesevaOne().fontFamily,
+                      fontSize: 20,
+                      decoration: TextDecoration.underline),
+                  bodyMedium: TextStyle(
+                      fontFamily: GoogleFonts.yesevaOne().fontFamily,
+                      fontSize: 15,
+                      decoration: TextDecoration.underline),
                 ),
                 appBarTheme: const AppBarTheme(color: Colors.transparent),
               ),

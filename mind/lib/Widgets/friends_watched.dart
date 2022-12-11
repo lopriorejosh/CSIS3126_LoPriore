@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mind/Models/user_model.dart';
-import 'package:mind/Providers/account_provider.dart';
 import 'package:provider/provider.dart';
 
-import '../Models/friend_model.dart';
+import '../Models/user_model.dart';
+import '../Providers/account_provider.dart';
 import '../Models/movie_model.dart';
 import '../Providers/movies_provider.dart';
 

@@ -4,11 +4,10 @@ import 'dart:convert';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:mind/Providers/account_provider.dart';
 import 'package:provider/provider.dart';
 
+import '../Providers/account_provider.dart';
 import '../Models/user_model.dart';
-import '../Models/results_model.dart';
 import '../Providers/movies_provider.dart';
 import '../Models/movie_model.dart';
 import '../Screens/movie_description_page.dart';
@@ -260,10 +259,12 @@ class FriendSearchDelegate extends SearchDelegate {
                 return ListTile(
                   title: Text(friendMatches[index].username.toString()),
                   trailing: IconButton(
-                    icon: Icon(Icons.add),
-                    onPressed: () => friendsProvider.addFriend(
-                        friendMatches[index], context),
-                  ),
+                      icon: Icon(Icons.add),
+                      onPressed: () {
+                        friendsProvider.addFriend(
+                            friendMatches[index], context);
+                        Navigator.pop(context);
+                      }),
                 );
               }));
         }));

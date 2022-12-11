@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:mind/Providers/account_provider.dart';
 import 'package:provider/provider.dart';
 
+import '../Providers/account_provider.dart';
+import '../Providers/movies_provider.dart';
 import '../Providers/auth_provider.dart';
+import '../Models/movie_model.dart';
 
 class MyDrawer extends StatelessWidget {
   @override
@@ -28,19 +30,24 @@ class MyDrawer extends StatelessWidget {
         ),
         Divider(),
         ListTile(
-          onTap: () {
-            Navigator.of(context).pushReplacementNamed('/friendsLookup');
+          onTap: () async {
+            List<Movie> movieList = [];
+            await Provider.of<MoviesProvider>(context, listen: false)
+                .discoverMovies()
+                .then((value) => movieList = value);
+            Navigator.of(context)
+                .pushReplacementNamed('/decideMovie', arguments: movieList);
           },
-          title: Text('Friends'),
-          leading: Icon(Icons.people),
+          title: Text('Movie Finder'),
+          leading: Icon(Icons.movie),
         ),
         Divider(),
         ListTile(
           onTap: () {
             Navigator.of(context).pushReplacementNamed('/account');
           },
-          title: Text('Account/Settings'),
-          leading: Icon(Icons.settings),
+          title: Text('Account/Friends'),
+          leading: Icon(Icons.person),
         ),
         Divider(),
         ListTile(
@@ -51,14 +58,14 @@ class MyDrawer extends StatelessWidget {
           title: Text('Log Out'),
           leading: Icon(Icons.exit_to_app),
         ),
-        Divider(),
+        /*Divider(),
         ListTile(
           onTap: () {
             Navigator.of(context).pushReplacementNamed('/dummy');
           },
           title: Text('Dummy'),
           leading: Icon(Icons.radar),
-        ),
+        ),*/
       ],
     ));
   }

@@ -29,7 +29,7 @@ class _HomePageState extends State<HomePage> {
     Provider.of<AccountProvider>(context, listen: false)
         .fetchAccountInfo(context);
     super.initState();
-    pageController = PageController(initialPage: selectedIndex);
+    //pageController = PageController(initialPage: selectedIndex);
   }
 
   @override
@@ -47,7 +47,7 @@ class _HomePageState extends State<HomePage> {
               child: CircularProgressIndicator(),
             )
           : SingleChildScrollView(
-              controller: pageController,
+              //controller: pageController,
               child: Column(children: [
                 TopMovie(
                   popularMovies[0],

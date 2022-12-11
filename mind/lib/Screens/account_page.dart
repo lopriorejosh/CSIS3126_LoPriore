@@ -4,6 +4,8 @@ import 'package:provider/provider.dart';
 import '../Providers/account_provider.dart';
 import '../Widgets/my_appbar.dart';
 import '../Widgets/my_drawer.dart';
+import '../Widgets/my_friends_list.dart';
+import '../Widgets/search_delegates.dart';
 
 class AccountPage extends StatefulWidget {
   static const routeName = "/account";
@@ -23,17 +25,46 @@ class _AccountPageState extends State<AccountPage> {
       body: Center(
         child: Column(
           children: [
-            SizedBox(
-              height: MediaQuery.of(context).size.height * .3,
-              child: ClipRRect(
-                  borderRadius: BorderRadius.all(Radius.circular(40)),
-                  child: accountInfo.profPicUrl == null
-                      ? Placeholder()
-                      : Image.network(accountInfo.profPicUrl!)),
+            //account info
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: CircleAvatar(
+                backgroundImage: NetworkImage(accountInfo.profPicUrl!),
+                radius: 50,
+              ),
             ),
-            Text("Account Info: "),
-            Text(accountInfo.username!),
-            Text(accountInfo.email!),
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  'Welcome ' + accountInfo.username!,
+                  style: Theme.of(context).textTheme.displayMedium,
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                accountInfo.email!,
+                style: Theme.of(context).textTheme.caption,
+              ),
+            ),
+            Divider(),
+            //friends list
+            SizedBox(
+                height: MediaQuery.of(context).size.height * .55,
+                child: MyFriendsList()),
+            Divider(),
+            SizedBox(
+              height: 30,
+              child: ElevatedButton(
+                child: Icon(Icons.add),
+                onPressed: () {
+                  showSearch(
+                      context: context, delegate: FriendSearchDelegate());
+                },
+              ),
+            )
           ],
         ),
       ),

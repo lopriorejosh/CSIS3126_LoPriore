@@ -7,4 +7,8 @@ class Review {
     required this.content,
     required this.author,
   });
+
+  factory Review.fromJson(Map<String, dynamic> json) {
+    return Review(content: json['content'], author: json['author']);
+  }
 }

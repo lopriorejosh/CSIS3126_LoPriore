@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:mind/Models/movie_model.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:mind/Providers/movies_provider.dart';
 
+import '../Providers/movies_provider.dart';
+import '../Providers/account_provider.dart';
 import '../Widgets/my_appbar.dart';
-import '../Models/user_model.dart';
 import '../Models/genre_model.dart';
 
 class ConnectWithFriendsPage extends StatefulWidget {
@@ -19,6 +18,7 @@ class ConnectWithFriendsPage extends StatefulWidget {
 
 class _ConnectWithFriendsPageState extends State<ConnectWithFriendsPage> {
   List<bool> addGenre = [];
+  List<Genre> selectedGenres = [];
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +57,13 @@ class _ConnectWithFriendsPageState extends State<ConnectWithFriendsPage> {
                               addGenre[index] =
                                   addGenre[index] == false ? true : false;
                             });
-                            //add to db
+                            //add to list
+                            if (addGenre[index] == true) {
+                              selectedGenres.add(snapshot.data![index]);
+                            } else {
+                              selectedGenres.removeWhere((element) =>
+                                  element.id == snapshot.data![index].id);
+                            }
                           },
                         ),
                         selected: false,
@@ -67,7 +73,17 @@ class _ConnectWithFriendsPageState extends State<ConnectWithFriendsPage> {
                   }))),
             ),
           ),
-          ElevatedButton(onPressed: () {}, child: Text('Done'))
+          ElevatedButton(
+              onPressed: () {
+                //add list of genres to db
+                /*await Provider.of<AccountProvider>(context, listen: false)
+                    .setGenresToSearch(selectedGenres, context);
+                Navigator.pushReplacementNamed(context, '/decideMovie');
+                */
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text('This Feature is Under Construction')));
+              },
+              child: Text('Done'))
         ],
       )),
     );

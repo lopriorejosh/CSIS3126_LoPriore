@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:expandable_text/expandable_text.dart';
-import 'package:mind/Models/video_model.dart';
 import 'package:provider/provider.dart';
 
 import '../Providers/movies_provider.dart';
@@ -29,6 +27,7 @@ class _MovieDescriptionPageState extends State<MovieDescriptionPage> {
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         child: Column(
+          mainAxisSize: MainAxisSize.max,
           children: [
             Stack(children: [
               ShaderMask(
@@ -41,7 +40,7 @@ class _MovieDescriptionPageState extends State<MovieDescriptionPage> {
                 },
                 blendMode: BlendMode.dstIn,
                 child: SizedBox(
-                  height: MediaQuery.of(context).size.height * .6,
+                  height: MediaQuery.of(context).size.height * .5,
                   width: double.infinity,
                   child: Image.network(
                     ApiConstants.imageEndpoint +
@@ -76,14 +75,116 @@ class _MovieDescriptionPageState extends State<MovieDescriptionPage> {
               },
             ),
             const Divider(),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: ExpandableText(
-                movieInfo.overview.toString(),
-                expandText: 'Show More',
-                collapseText: 'Show Less',
-                maxLines: 2,
-                style: Theme.of(context).textTheme.bodyLarge,
+            Expanded(
+              child: ListView(
+                padding: EdgeInsets.all(0),
+                shrinkWrap: true,
+                children: [
+                  Center(
+                    child: FittedBox(
+                        child: Text(
+                      movieInfo.tagline!.isNotEmpty
+                          ? movieInfo.tagline.toString()
+                          : 'No Tagline',
+                      style: Theme.of(context).textTheme.caption,
+                    )),
+                  ),
+                  Divider(),
+                  Center(
+                    child: FittedBox(
+                      child: Text(
+                        'Overview',
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    height: 100,
+                    width: double.infinity,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        movieInfo.overview.toString(),
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+                    ),
+                  ),
+                  Divider(),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * .05,
+                    width: double.infinity,
+                    child: FutureBuilder(
+                      future: Provider.of<MoviesProvider>(context)
+                          .getSingleMovieWP(movieInfo.id),
+                      builder: ((context, snapshot) => snapshot.data?.length ==
+                              0
+                          ? Center(
+                              child: Text(
+                                'No Streaming Options',
+                                style: Theme.of(context).textTheme.labelSmall,
+                              ),
+                            )
+                          : ListView.builder(
+                              shrinkWrap: true,
+                              scrollDirection: Axis.horizontal,
+                              itemCount: snapshot.data?.length ?? 0,
+                              itemBuilder: ((context, index) {
+                                return SizedBox(
+                                  //height: 75,
+                                  width: 100,
+                                  child: Card(
+                                      elevation: 8,
+                                      color: Colors.green,
+                                      child: Center(
+                                        child: Text(
+                                          overflow: TextOverflow.clip,
+                                          textAlign: TextAlign.center,
+                                          snapshot.data![index].providerName
+                                              .toString(),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .labelSmall,
+                                        ),
+                                      )),
+                                );
+                              }))),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  SizedBox(
+                      height: 50,
+                      child: Text(
+                        'Runtime: ' + movieInfo.runtime.toString() + ' min.',
+                        style: Theme.of(context).textTheme.labelSmall,
+                      )),
+                  SizedBox(
+                      height: 50,
+                      child: Text(
+                        'Release Date: ' + movieInfo.release_date.toString(),
+                        style: Theme.of(context).textTheme.labelSmall,
+                      )),
+                  SizedBox(
+                      height: 50,
+                      child: Text(
+                        'Popularity: ' +
+                            movieInfo.runtime.toString() +
+                            ' rating',
+                        style: Theme.of(context).textTheme.labelSmall,
+                      )),
+                ],
+              ),
+            ),
+/*
+            Expanded(
+              flex: 3,
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Text(
+                  movieInfo.overview.toString(),
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
               ),
             ),
             const Divider(),
@@ -100,6 +201,7 @@ class _MovieDescriptionPageState extends State<MovieDescriptionPage> {
                 future: Provider.of<MoviesProvider>(context)
                     .getSingleMovieGenre(movieInfo.id),
                 builder: ((context, snapshot) => ListView.builder(
+                    shrinkWrap: true,
                     scrollDirection: Axis.horizontal,
                     itemCount: snapshot.data?.length ?? 0,
                     itemBuilder: ((context, index) {
@@ -135,6 +237,7 @@ class _MovieDescriptionPageState extends State<MovieDescriptionPage> {
                         child: Text('No Streaming Options'),
                       )
                     : ListView.builder(
+                        shrinkWrap: true,
                         scrollDirection: Axis.horizontal,
                         itemCount: snapshot.data?.length ?? 0,
                         itemBuilder: ((context, index) {
@@ -152,7 +255,7 @@ class _MovieDescriptionPageState extends State<MovieDescriptionPage> {
                           );
                         }))),
               ),
-            ),
+            )*/
           ],
         ),
       ),

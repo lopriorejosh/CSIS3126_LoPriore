@@ -9,10 +9,4 @@ class Genre {
       id: json['id'] ?? null,
       name: json['name'] ?? null,
       genres: json['genres'] ?? <Genre>[]);
-
-  /*factory Genre.genresFromJson(Map<String, dynamic> json) {
-    return Genre(
-        genres: List<Genre>.from(
-            json['genres'].map((genre) => Genre.fromJson(genre))));
-  }*/
 }

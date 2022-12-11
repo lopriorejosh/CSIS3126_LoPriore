@@ -1,5 +1,4 @@
 class WatchProvider {
-  // List<WatchProvider>? watchProviders;
   String? country;
   String? providerName;
   String? logoPath;
@@ -15,10 +14,4 @@ class WatchProvider {
       country: json['country'] ?? 'N/A',
     );
   }
-  /*factory WatchProvider.watchProvidersFromJson(Map<String, dynamic> json) {
-    return WatchProvider(
-        watchProviders: List<WatchProvider>.from(json['results']
-            .map((watchProvider) => WatchProvider.fromJson(watchProvider))));
-  }*/
 }
-//TODO: CONVERT RESULTS TO US TO FLATRATE IN US LIST
