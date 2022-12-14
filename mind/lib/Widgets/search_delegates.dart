@@ -59,50 +59,24 @@ class MovieSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    //movieMatches.clear();
     //query the api db
-    //searchMovie(query);
     //display list
-    return /*movieMatches.isEmpty
-        ? Center(
-            child: Text(
-              'No Matches',
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.titleSmall,
-            ),
-          )
-        :*/
-        /*ListView.builder(
-            itemCount: movieMatches.length,
-            itemBuilder: (context, index) {
-              return ListTile(
-                title: Text(
-                  textAlign: TextAlign.center,
-                  movieMatches[index].title,
-                  style: Theme.of(context).textTheme.titleSmall,
-                ),
-                onTap: (() => Navigator.of(context).pushNamed(
-                      MovieDescriptionPage.routeName,
-                      arguments: Movie(
-                          title: movieMatches[index].title,
-                          description: movieMatches[index].description,
-                          id: movieMatches[index].id,
-                          imageUrl: movieMatches[index].imageUrl,
-                          genres: movieMatches[index].genres,
-                          video: movieMatches[index].video,
-                          watchProviders: movieMatches[index].watchProviders,
-                          reviews: movieMatches[index].reviews,
-                          runtime: movieMatches[index].runtime),
-                    )),
-              );
-            });*/
-        FutureBuilder(
-            future: searchMovie(query),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(child: CircularProgressIndicator());
-              } else {
-                return ListView.builder(
+    return FutureBuilder(
+        future: searchMovie(query),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else {
+            return !snapshot.hasData ||
+                    snapshot.data! == [] ||
+                    snapshot.data!.isEmpty
+                ? Center(
+                    child: Text(
+                      'No Movies Found. Try Searching Again',
+                      style: Theme.of(context).textTheme.caption,
+                    ),
+                  )
+                : ListView.builder(
                     itemCount: snapshot.data!.length,
                     itemBuilder: (context, index) {
                       return ListTile(
@@ -138,8 +112,8 @@ class MovieSearchDelegate extends SearchDelegate {
                                     snapshot.data![index].watchProviders))),
                       );
                     });
-              }
-            });
+          }
+        });
   }
 
   @override
@@ -231,8 +205,10 @@ class FriendSearchDelegate extends SearchDelegate {
           }
           if (!snapshot.hasData || snapshot.data!.snapshot.value == null) {
             return Center(
-              child:
-                  Text('No Users Found. Try Again. Search is Case Sensitive.'),
+              child: FittedBox(
+                  child: Text(
+                      'No Users Found. Try Again. Search is Case Sensitive.',
+                      style: Theme.of(context).textTheme.caption)),
             );
           }
           if (snapshot.hasData &&
@@ -273,10 +249,12 @@ class FriendSearchDelegate extends SearchDelegate {
   @override
   Widget buildSuggestions(BuildContext context) {
     return Center(
-        child: Text(
-      'Search Users By Username. Search Is Case Sensitive.',
-      textAlign: TextAlign.center,
-      style: Theme.of(context).textTheme.caption,
+        child: FittedBox(
+      child: Text(
+        'Search Users By Username. Search Is Case Sensitive.',
+        textAlign: TextAlign.center,
+        style: Theme.of(context).textTheme.caption,
+      ),
     ));
   }
 }

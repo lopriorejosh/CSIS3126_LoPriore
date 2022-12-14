@@ -26,9 +26,7 @@ class AccountProvider extends ChangeNotifier {
   List<User> _friends = [];
   List<User> get friendsList => _friends;
 
-  //late StreamSubscription<DatabaseEvent> _accountStream;
   late StreamSubscription<DatabaseEvent> _friendsStream;
-  //late StreamSubscription<DatabaseEvent> _movieStream;
 
   Future<void> getProfPic(BuildContext context) async {
     var accountFinder = Provider.of<AuthProvider>(context, listen: false);
@@ -99,6 +97,7 @@ class AccountProvider extends ChangeNotifier {
       print(error);
     }
   }
+//used to select desired genres
 
   Future<void> setGenresToSearch(
       List<Genre> genresToSearch, BuildContext context) async {

@@ -4,7 +4,12 @@ import 'package:provider/provider.dart';
 import '../Providers/account_provider.dart';
 import '../Widgets/search_delegates.dart';
 
-class MyFriendsList extends StatelessWidget {
+class MyFriendsList extends StatefulWidget {
+  @override
+  State<MyFriendsList> createState() => _MyFriendsListState();
+}
+
+class _MyFriendsListState extends State<MyFriendsList> {
   @override
   Widget build(BuildContext context) {
     var friends = Provider.of<AccountProvider>(context).friendsList;
@@ -28,6 +33,7 @@ class MyFriendsList extends StatelessWidget {
                     //search for friend
                     showSearch(
                         context: context, delegate: FriendSearchDelegate());
+                    setState(() {});
                   },
                   child: Text("Add Friends",
                       textAlign: TextAlign.center,

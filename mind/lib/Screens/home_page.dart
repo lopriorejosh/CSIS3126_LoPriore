@@ -28,6 +28,7 @@ class _HomePageState extends State<HomePage> {
         .fetchMovieList('topRated');
     Provider.of<AccountProvider>(context, listen: false)
         .fetchAccountInfo(context);
+    Provider.of<AccountProvider>(context, listen: false).fetchFriends(context);
     super.initState();
     //pageController = PageController(initialPage: selectedIndex);
   }

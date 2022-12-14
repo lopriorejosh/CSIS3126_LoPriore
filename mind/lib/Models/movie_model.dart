@@ -39,6 +39,7 @@ class Movie {
       required this.video,
       required this.watchProviders});
 
+//convert json to movie model. this can be used from a variety of different api calls that may or may not include some of the fields hench the defaulting values
   factory Movie.fromJson(Map<String, dynamic> json) {
     final _genresData =
         json['genres'] == null ? <Genre>[] : json['genres'] as List<dynamic>?;

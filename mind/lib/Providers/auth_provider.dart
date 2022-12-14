@@ -17,6 +17,7 @@ class AuthProvider with ChangeNotifier {
   String? _UID;
   Timer? _authTimer;
 
+//check if user is authenticated
   bool get isAuth {
     return token != null;
   }
